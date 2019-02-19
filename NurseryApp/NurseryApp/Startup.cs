@@ -29,7 +29,7 @@ namespace NurseryApp
             services.AddMvc();
 
             services.AddDbContext<NurseryDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
