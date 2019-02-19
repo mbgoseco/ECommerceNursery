@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using NurseryApp.Data;
 
 namespace NurseryApp
 {
@@ -18,7 +17,7 @@ namespace NurseryApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NurseryDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]))
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
