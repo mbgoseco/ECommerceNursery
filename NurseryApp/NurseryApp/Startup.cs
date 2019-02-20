@@ -39,6 +39,8 @@ namespace NurseryApp
 
             services.AddDbContext<NurseryDbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+
+            services.AddScoped<IInventory, InventoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
