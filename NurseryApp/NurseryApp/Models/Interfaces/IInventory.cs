@@ -7,14 +7,14 @@ namespace NurseryApp.Models.Interfaces
 {
     public interface IInventory
     {
-        Task CreateProduct();
+        Task CreateProduct(Product product);
 
         Task<List<Product>> GetAllProducts();
 
-        Task<Product> GetProductByID();
+        Task<Product> GetProductByID(int id);
 
-        Task Update();
+        Task Update(int id);
 
-        Task DeleteProductByID();
+        Task DeleteProductByID(int id);
     }
 }
