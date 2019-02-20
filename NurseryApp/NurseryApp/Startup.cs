@@ -11,6 +11,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NurseryApp.Data;
 using NurseryApp.Models;
+using NurseryApp.Models.Interfaces;
+using NurseryApp.Models.Services;
 
 namespace NurseryApp
 {
@@ -39,6 +41,8 @@ namespace NurseryApp
 
             services.AddDbContext<NurseryDbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
+
+            services.AddScoped<IInventory, InventoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
