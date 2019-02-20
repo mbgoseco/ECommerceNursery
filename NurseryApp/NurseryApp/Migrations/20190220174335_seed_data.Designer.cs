@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NurseryApp.Data;
 
 namespace NurseryApp.Migrations
 {
     [DbContext(typeof(NurseryDbContext))]
-    partial class NurseryDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190220174335_seed_data")]
+    partial class seed_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
