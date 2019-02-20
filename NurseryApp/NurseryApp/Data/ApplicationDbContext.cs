@@ -14,10 +14,5 @@ namespace NurseryApp.Data
         {
 
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-
-        }
     }
 }
