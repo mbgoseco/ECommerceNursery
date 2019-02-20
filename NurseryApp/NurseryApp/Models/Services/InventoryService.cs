@@ -33,6 +33,11 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Delete a product from the Products table by ID.
+        /// </summary>
+        /// <param name="id">int</param>
+        /// <returns>Task</returns>
         public async Task DeleteProductByID(int id)
         {
             Product product = _context.Products.FirstOrDefault(p => p.ID == id);
@@ -40,18 +45,31 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Get all products in the Product table
+        /// </summary>
+        /// <returns>A list of Products</returns>
         public async Task<List<Product>> GetAllProducts()
         {
             List<Product> products = await _context.Products.ToListAsync();
             return products;
         }
 
+        /// <summary>
+        /// Get a product by ID
+        /// </summary>
+        /// <param name="id">int</param>
+        /// <returns>Product</returns>
         public async Task<Product> GetProductByID(int id)
         {
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
             return product;
         }
-
+        /// <summary>
+        /// Update a product after changes have been made.
+        /// </summary>
+        /// <param name="product">Product</param>
+        /// <returns>Task</returns>
         public async Task Update(Product product)
         {
             _context.Products.Update(product);
