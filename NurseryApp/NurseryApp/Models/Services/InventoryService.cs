@@ -1,4 +1,5 @@
-﻿using NurseryApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using NurseryApp.Data;
 using NurseryApp.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,10 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<Product>> GetAllProducts()
+        public async Task<List<Product>> GetAllProducts()
         {
-            throw new NotImplementedException();
+            List<Product> products = await _context.Products.ToListAsync();
+            return products;
         }
 
         public Task<Product> GetProductByID()
