@@ -28,13 +28,15 @@ namespace NurseryApp.Models.Services
         /// <returns>Task</returns>
         public async Task CreateProduct(Product product)
         {
-            _context.Add(product);
+            _context.Products.Add(product);
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteProductByID()
+        public async Task DeleteProductByID(int id)
         {
-            throw new NotImplementedException();
+            Product product = _context.Products.FirstOrDefault(p => p.ID == id);
+            _context.Products.Remove(product);
+            await _context.SaveChangesAsync();
         }
 
         public Task<List<Product>> GetAllProducts()
