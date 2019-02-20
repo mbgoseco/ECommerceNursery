@@ -5,7 +5,16 @@ using System.Threading.Tasks;
 
 namespace NurseryApp.Models.Interfaces
 {
-    interface IInventory
+    public interface IInventory
     {
+        Task CreateProduct();
+
+        Task<List<Product>> GetAllProducts();
+
+        Task<Product> GetProductByID();
+
+        Task Update();
+
+        Task DeleteProductByID();
     }
 }
