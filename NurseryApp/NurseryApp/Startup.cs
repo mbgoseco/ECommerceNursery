@@ -16,6 +16,7 @@ namespace NurseryApp
 {
     public class Startup
     {
+
         public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
