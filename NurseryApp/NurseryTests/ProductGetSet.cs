@@ -6,6 +6,7 @@ namespace NurseryTests
 {
     public class ProductGetSet
     {
+        // Getters
         [Fact]
         public void CanGetID()
         {
@@ -84,6 +85,7 @@ namespace NurseryTests
             Assert.Equal("Img.Path", product.Img);
         }
 
+        //Setters
         [Fact]
         public void CanSetID()
         {
