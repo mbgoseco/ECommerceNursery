@@ -9,15 +9,27 @@ namespace NurseryApp.Models.Services
 {
     public class InventoryService : IInventory
     {
+        //Properties
         private readonly NurseryDbContext _context;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="context">NurseryDbContext</param>
         public InventoryService(NurseryDbContext context)
         {
             _context = context;
         }
-        public Task CreateProduct()
+
+        /// <summary>
+        /// Create a new product
+        /// </summary>
+        /// <param name="product">Product</param>
+        /// <returns>Task</returns>
+        public async Task CreateProduct(Product product)
         {
-            throw new NotImplementedException();
+            _context.Add(product);
+            await _context.SaveChangesAsync();
         }
 
         public Task DeleteProductByID()
