@@ -13,7 +13,7 @@ namespace NurseryApp.Models.Interfaces
 
         Task<Product> GetProductByID(int id);
 
-        Task Update(int id);
+        Task Update(Product product);
 
         Task DeleteProductByID(int id);
     }

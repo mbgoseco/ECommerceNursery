@@ -46,14 +46,16 @@ namespace NurseryApp.Models.Services
             return products;
         }
 
-        public Task<Product> GetProductByID()
+        public async Task<Product> GetProductByID(int id)
         {
-            throw new NotImplementedException();
+            Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
+            return product;
         }
 
-        public Task Update()
+        public async Task Update(Product product)
         {
-            throw new NotImplementedException();
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
         }
     }
 }
