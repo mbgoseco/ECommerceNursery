@@ -5,6 +5,7 @@ using NurseryApp.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace NurseryApp.Controllers
@@ -41,6 +42,13 @@ namespace NurseryApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+                    Claim birthdayClaim = new Claim(ClaimTypes.DateOfBirth, new DateTime(user.Birthday.Year, user.Birthday.Month, user.Birthday.Day).ToString("u"), ClaimValueTypes.DateTime);
+                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+                    List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim };
+
+                    await _UserManager.AddClaimsAsync(user, claims);
+
                     await _SignInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }

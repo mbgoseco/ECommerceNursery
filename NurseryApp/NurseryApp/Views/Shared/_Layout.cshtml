@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@inject SignInManager<ApplicationUser> signInManager
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        @if (signInManager.IsSignedIn(User))
+        {
+            <span>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</span>
+        }
+        else
+        {
+            <span>
+                <a asp-controller="Account" asp-action="Login">Login</a> or
+                <a asp-controller="Account" asp-action="Register">Register!</a>
+            </span>
+        }
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>
