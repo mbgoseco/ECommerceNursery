@@ -21,8 +21,16 @@
                 <a href="/Home/Index">Home</a>
             </div>
             <div class="master-nav-item register-nav">
-                <a href="/Account/Login">Login</a>
-                <div class=" login-drop hidden"> <a href="/Account/Register">Register</a></div>
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <a href="">Welcome @User.Claims.First(name => name.Type == "FullName").Value!</a>
+                    <div class=" login-drop hidden"> <a href="">Placeholder</a></div>
+                }
+                else
+                {
+                    <a href="/Account/Login">Login</a>
+                    <div class=" login-drop hidden"> <a href="/Account/Register">Register</a></div>
+                }
             </div>
             <div class="master-nav-item dropdown-nav product-nav"><a href="">Products</a></div>
             <div class="master-nav-item dropdown-nav basket-nav">
@@ -31,19 +39,6 @@
         </nav>
     </header>
     <main>
-    <div>
-        @if (signInManager.IsSignedIn(User))
-        {
-            <span>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</span>
-        }
-        else
-        {
-            <span>
-                <a asp-controller="Account" asp-action="Login">Login</a> or
-                <a asp-controller="Account" asp-action="Register">Register!</a>
-            </span>
-        }
-    </div>
         <div>
             @RenderBody()
         </div>

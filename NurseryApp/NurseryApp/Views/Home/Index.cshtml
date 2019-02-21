@@ -1,9 +1,24 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "BinaryTree Nursery";
     Layout = "_Layout";
 }
-<h2>Welcome Home!</h2>
-<p><a href="/Account/Login">Login</a>||<a href="/Account/Register">Register</a></p>
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    <h2>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</h2>
+   
+}
+else
+{
+    <h2> Welcome Home!</h2>
+    <p><a asp-controller="Account" asp-action="Login">Login</a> or
+                <a asp-controller="Account" asp-action="Register">Register!</a>
+    </p>
+}
 <section class="home-img-holder">
     <div class="img1">
         <img class="img1-img" src="~/Assets/cactus.jpg" />
