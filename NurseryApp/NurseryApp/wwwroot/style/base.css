@@ -1,3 +1,18 @@
 ﻿body {
-    background-image: url("../Assets/steps.jpg")
+    background: url("../Assets/steps.jpg");
+    background-size: 100vw;    
+}
+
+header{
+    background-color: white;
+}
+
+main {
+    background-color: white;
+    opacity: .7;
+}
+
+footer{
+    background-color: black;
+    color: white;
 }
