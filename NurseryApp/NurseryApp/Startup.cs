@@ -56,6 +56,8 @@ namespace NurseryApp
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.UseMvc(route =>
             {
                 route.MapRoute(
