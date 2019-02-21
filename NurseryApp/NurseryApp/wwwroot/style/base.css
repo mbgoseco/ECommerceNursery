@@ -1,18 +1,58 @@
 ﻿body {
     background: url("../Assets/steps.jpg");
-    background-size: 100vw;    
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 header{
     background-color: white;
+    padding:2vh 5vw 2vh 5vw;
 }
 
 main {
     background-color: white;
     opacity: .7;
+    height: 150vh;
+    margin: 5vw;
 }
 
 footer{
     background-color: black;
     color: white;
+}
+
+nav{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.master-nav-item{
+    display: flex;
+    width: 22.5vw; /*header - padding / number of nav items*/
+    justify-content: center;
+    
+}
+
+/*Fonts*/
+*, h1, h2, h3, h4, a, p{
+    font-family: sans-serif;
+}
+
+h1{
+    font-size: 3vw;
+}
+h2{
+    font-size: 2.6vw;
+}
+h3 {
+    font-size: 2.4vw;
+}
+h4 {
+    font-size: 2vw;
+}
+
+p, a{
+    font-size: 1.6vw;
 }
