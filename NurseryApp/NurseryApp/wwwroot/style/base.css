@@ -11,8 +11,7 @@ header{
 }
 
 main {
-    background-color: white;
-    opacity: .7;
+    background-color: hsla(0, 59%, 100%, 0.79);
     height: 150vh;
     margin: 5vw;
 }
@@ -26,6 +25,7 @@ nav{
     display: flex;
     flex-flow: row;
     justify-content: space-around;
+    margin-top: 5px;
 }
 
 .master-nav-item{
@@ -45,6 +45,8 @@ h1{
 }
 h2{
     font-size: 2.6vw;
+    text-align: center;
+    margin: 3vw;
 }
 h3 {
     font-size: 2.4vw;
@@ -56,3 +58,61 @@ h4 {
 p, a{
     font-size: 1.6vw;
 }
+
+
+
+/*Home specific styling*/
+.home-img-holder div{
+    box-sizing: border-box;
+    height: 20vw;
+    width: 30vw;
+    max-width: 300px;
+    max-height: 200px;
+    padding: 5px;
+}
+.home-img-holder div img{
+    width: 100%;
+    height: 100%;
+}
+
+.home-img-holder{
+    height: 60vw;
+    max-height: 600px;
+    width: 60vw;
+    max-width: 600px;
+    display: flex;
+    flex-flow: wrap column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-img-holder div:last-child {
+    height: 60vw;
+    max-height: 600px;
+}
+
+.home-img-holder div img:hover{
+    box-shadow: rgba(0,0,0,5) 3px 3px;
+}
+
+img1{
+    position: relative;
+}
+img1-div {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+}
+img1, img2, img3, img4{
+    position: relative;
+}
+img1-div, img4-div, img2-div, img3-div {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+}
+
+.hidden {
+    display: none;
+}
+
