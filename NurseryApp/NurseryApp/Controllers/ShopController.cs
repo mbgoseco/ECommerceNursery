@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NurseryApp.Models;
 using NurseryApp.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,20 @@ namespace NurseryApp.Controllers
         }
 
         /// <summary>
-        /// Gives the shopping view page a list of all products in the nursery DB
+        /// Gives the shopping view page a list of all (non-bulk)products in the nursery DB
         /// </summary>
-        /// <returns>View of shopping page with all products</returns>
+        /// <returns>View of shopping page with all (non-bulk)products</returns>
         public async Task<IActionResult> Shop()
         {
-            return View(await _context.GetProducts());
+            IEnumerable<Product> products = await _context.GetProducts();
+            IEnumerable<Product> results = products.Where(p => p.Bulk == false);
+            return View(results);
         }
 
+        /// <summary>
+        /// Only returns a view if the user is a landscaper. Returns a view of all products (including bulk products)
+        /// </summary>
+        /// <returns>View of Landscaper Shop with all products</returns>
         [Authorize(Policy = "Landscaper")]
         public async Task<IActionResult> LandscaperShop()
         {
