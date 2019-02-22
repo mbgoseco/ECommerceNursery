@@ -10,6 +10,12 @@ namespace NurseryApp.Models.Handler
 {
     public class LandscaperHandler : AuthorizationHandler<LandscaperRequirement>
     {
+        /// <summary>
+        /// Creates a policy that checks if a registered user is a landscaper. If true then user will have access to pages explicity for landscapers.
+        /// </summary>
+        /// <param name="context">AuthorizationHandlerContext</param>
+        /// <param name="requirement">LandscaperRequirement</param>
+        /// <returns>true or false flag for landscaper status</returns>
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, LandscaperRequirement requirement)
         {
             if (!context.User.HasClaim(c => c.Type == "Landscape"))

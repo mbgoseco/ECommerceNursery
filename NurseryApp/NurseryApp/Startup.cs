@@ -40,10 +40,10 @@ namespace NurseryApp
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:IdentityDefaultConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:IdentityProductionConnection"]));
 
             services.AddDbContext<NurseryDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
 
             services.AddAuthorization(options =>
             {
