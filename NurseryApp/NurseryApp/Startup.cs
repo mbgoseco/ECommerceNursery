@@ -53,6 +53,7 @@ namespace NurseryApp
             services.AddScoped<IAuthorizationHandler, LandscaperHandler>();
 
             services.AddScoped<IInventory, InventoryService>();
+            services.AddScoped<IShop, ShopService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

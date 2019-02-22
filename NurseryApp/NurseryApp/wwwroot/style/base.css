@@ -118,3 +118,29 @@ img1-div, img4-div, img2-div, img3-div {
     display: none;
 }
 
+.product_box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 89vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product {
+    background-color: hsla(0, 59%, 100%, 0.79);
+    margin: 2vw;
+}
+
+.product_img {
+    width: 25vw;
+    height: 25vh;
+}
+
+.product_name, .product_price {
+    font-family: Verdana;
+    font-size: 1rem;
+    margin: 1vw;
+}
