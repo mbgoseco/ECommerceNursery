@@ -15,6 +15,7 @@ namespace NurseryApp.Models
         public decimal Price { get; set; }
         public string Img { get; set; }
         public string Sku { get; set; }
+        public bool Bulk { get; set; }
 
         public enum PlantType { Tree, Shrub, Flower, Houseplant };
     }
