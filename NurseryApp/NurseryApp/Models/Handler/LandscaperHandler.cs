@@ -10,14 +10,14 @@ namespace NurseryApp.Models.Handler
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, LandscaperRequirement requirement)
         {
-            if (!context.User.HasClaim(c => c.Type == "Landscaper"))
+            if (!context.User.HasClaim(c => c.Type == "Landscape"))
             {
                 return Task.CompletedTask;
             }
 
-            string Landscape = context.User.FindFirst(u => u.Type == "Landscaper").Value;
+            string Landscape = context.User.FindFirst(u => u.Type == "Landscape").Value;
 
-            if (Landscape == "true")
+            if (Landscape == "True")
             {
                 context.Succeed(requirement);
             }

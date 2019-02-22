@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NurseryApp.Data;
 using NurseryApp.Models;
+using NurseryApp.Models.Handler;
 using NurseryApp.Models.Interfaces;
 using NurseryApp.Models.Services;
 
@@ -42,6 +44,13 @@ namespace NurseryApp
 
             services.AddDbContext<NurseryDbContext>(options =>
                 options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Landscaper", policy => policy.Requirements.Add(new LandscaperRequirement()));
+            });
+
+            services.AddScoped<IAuthorizationHandler, LandscaperHandler>();
 
             services.AddScoped<IInventory, InventoryService>();
         }
