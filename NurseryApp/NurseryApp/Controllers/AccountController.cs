@@ -21,9 +21,18 @@ namespace NurseryApp.Controllers
             _SignInManager = signInManager;
         }
 
+        /// <summary>
+        /// Displays the user registration page where users can create an account
+        /// </summary>
+        /// <returns>User registration page</returns>
         [HttpGet]
         public IActionResult Register() => View();
 
+        /// <summary>
+        /// Take the data from the registration page form, create a new user object, add it to the user DB, and return to the home page.
+        /// </summary>
+        /// <param name="rvm">Register View Model data from form</param>
+        /// <returns>New user object and redirect to home page</returns>
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel rvm)
         {
@@ -60,9 +69,18 @@ namespace NurseryApp.Controllers
             return View(rvm);
         }
 
+        /// <summary>
+        /// Displays the page for users to login
+        /// </summary>
+        /// <returns>Login view</returns>
         [HttpGet]
         public IActionResult Login() => View();
 
+        /// <summary>
+        /// Takes in the data from the login page and checks if the credentials provided are valid. If valid, the user is signed in and redirected to the home page. If not, they are given an error message and kept on the login page.
+        /// </summary>
+        /// <param name="lvm">Login View Model data from login form</param>
+        /// <returns>User logged in at home page or error message</returns>
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel lvm)
         {
