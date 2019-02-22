@@ -7,5 +7,6 @@ namespace NurseryApp.Models.Handler
 {
     public class LandscaperRequirement
     {
+
     }
 }
