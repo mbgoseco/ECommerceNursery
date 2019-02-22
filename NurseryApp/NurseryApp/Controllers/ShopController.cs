@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NurseryApp.Models.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,12 @@ namespace NurseryApp.Controllers
         /// </summary>
         /// <returns>View of shopping page with all products</returns>
         public async Task<IActionResult> Shop()
+        {
+            return View(await _context.GetProducts());
+        }
+
+        [Authorize(Policy = "Landscaper")]
+        public async Task<IActionResult> LandscaperShop()
         {
             return View(await _context.GetProducts());
         }
