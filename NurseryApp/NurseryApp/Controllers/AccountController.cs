@@ -35,7 +35,8 @@ namespace NurseryApp.Controllers
                     LastName = rvm.LastName,
                     UserName = rvm.Email,
                     Email = rvm.Email,
-                    Birthday = rvm.Birthday
+                    Birthday = rvm.Birthday,
+                    Landscaper = rvm.Landscaper
                 };
 
                 var result = await _UserManager.CreateAsync(user, rvm.Password);
@@ -45,7 +46,8 @@ namespace NurseryApp.Controllers
                     Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
                     Claim birthdayClaim = new Claim(ClaimTypes.DateOfBirth, new DateTime(user.Birthday.Year, user.Birthday.Month, user.Birthday.Day).ToString("u"), ClaimValueTypes.DateTime);
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
-                    List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim };
+                    Claim landscaperClaim = new Claim("Landscape", $"{user.Landscaper}");
+                    List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim };
 
                     await _UserManager.AddClaimsAsync(user, claims);
 
