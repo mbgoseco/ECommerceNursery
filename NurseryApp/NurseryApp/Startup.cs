@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NurseryApp.Data;
 using NurseryApp.Models;
+using NurseryApp.Models.Handler;
 using NurseryApp.Models.Interfaces;
 using NurseryApp.Models.Services;
 
@@ -38,12 +40,20 @@ namespace NurseryApp
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:IdentityDefaultConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:IdentityProductionConnection"]));
 
             services.AddDbContext<NurseryDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Landscaper", policy => policy.Requirements.Add(new LandscaperRequirement()));
+            });
+
+            services.AddScoped<IAuthorizationHandler, LandscaperHandler>();
 
             services.AddScoped<IInventory, InventoryService>();
+            services.AddScoped<IShop, ShopService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +65,8 @@ namespace NurseryApp
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseStaticFiles();
 
             app.UseMvc(route =>
             {

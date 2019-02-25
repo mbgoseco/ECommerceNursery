@@ -1,5 +1,57 @@
-﻿@{
-    ViewData["Title"] = "Index";
+﻿@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "BinaryTree Nursery";
+    Layout = "_Layout";
 }
 
-<h1>Home Page!</h1>
+
+@if (signInManager.IsSignedIn(User))
+{
+    <h2>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</h2>
+   
+}
+else
+{
+    <h2> Welcome Home!</h2>
+    <p><a asp-controller="Account" asp-action="Login">Login</a> or
+                <a asp-controller="Account" asp-action="Register">Register!</a>
+    </p>
+}
+<section class="home-img-holder">
+    <div class="img1">
+        <img class="img1-img" src="~/Assets/cactus.jpg" />
+        <div class="img1-div hidden">
+            <a>Products</a>
+            <p> See our wide variety of products now!</p>
+        </div>
+    </div>
+    <div class="img2">
+        <img class="img2-img" src="~/Assets/girl.jpg" />
+        <div class="img2-div hidden">
+            <a> About Us</a>
+            <p>
+                Test Text
+            </p>
+        </div>
+    </div>
+    <div class="img3">
+        <img class="img3-img" src="~/Assets/sprout1.jpg" />
+        <div class="img3-div hidden">
+            <a> Extra Page 1</a>
+            <p>
+                Test Text
+            </p>
+        </div>
+    </div>
+    <div class="img4">
+        <img class="img4-img" src="~/Assets/greenhouse1.jpg" />
+        <div class="img4-div hidden">
+            <a> Extra Page 2</a>
+            <p>
+                Test Text
+            </p>
+        </div>
+    </div>
+</section>

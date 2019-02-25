@@ -1,0 +1,18 @@
+﻿@model IEnumerable<NurseryApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Shop";
+
+    Layout = "_Layout";
+}
+
+<div class="product_box">
+  @foreach (var product in Model)
+  {
+      <div class="product">
+          <img class="product_img" src="@product.Img" alt="@product.Name" />
+          <h2 class="product_name">@product.Name</h2>
+          <h2 class="product_price">@product.Price</h2>
+      </div>
+  }
+</div>

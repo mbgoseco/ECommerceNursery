@@ -1,0 +1,59 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@inject SignInManager<ApplicationUser> signInManager
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/style/reset.css" rel="stylesheet" />
+    <link href="~/style/base.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+    <header>
+        <h1>BinaryTree Nursery</h1>
+        <h4>A Clever SubHeader</h4>
+        <nav>
+            <div class="master-nav-item home-nav">
+                <a href="/Home/Index">Home</a>
+            </div>
+            <div class="master-nav-item register-nav">
+                @if (signInManager.IsSignedIn(User))
+                {
+                    <a href="">Welcome @User.Claims.First(name => name.Type == "FullName").Value!</a>
+                    <div class=" login-drop hidden"> <a href="">Placeholder</a></div>
+                }
+                else
+                {
+                    <a href="/Account/Login">Login</a>
+                    <div class=" login-drop hidden"> <a href="/Account/Register">Register</a></div>
+                }
+            </div>
+            <div class="master-nav-item dropdown-nav product-nav"><a asp-action="Shop" asp-controller="Shop">Products</a></div>
+            <div class="master-nav-item dropdown-nav product-nav"><a asp-action="LandscaperShop" asp-controller="Shop">Landscaper Bulk Items</a></div>
+            <div class="master-nav-item dropdown-nav basket-nav">
+                <a href="">Basket</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div>
+            @RenderBody()
+        </div>
+    </main>
+    <footer>
+        <ul>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Contact Us</a></li>
+            <li><a href="~/Home/Index">Home</a></li>
+        </ul>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="~/js/app.js"></script>
+</body>
+</html>
