@@ -12,7 +12,7 @@ namespace NurseryApp.Models.Services
     {
         private readonly NurseryDbContext _context;
 
-        public BasketProductService(NurseryDbContext context)
+        public BasketProductService(NurseryDbContext context, ApplicationDbContext appContext)
         {
             _context = context;
         }
