@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NurseryApp.Models.Interfaces
 {
-    interface IBasketProduct
+    public interface IBasketProduct
     {
         Task AddBasketProduct(BasketProduct basketProduct);
 
