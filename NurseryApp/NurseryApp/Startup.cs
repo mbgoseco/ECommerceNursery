@@ -52,6 +52,7 @@ namespace NurseryApp
 
             services.AddScoped<IAuthorizationHandler, LandscaperHandler>();
 
+            services.AddScoped<IBasketProduct, BasketProductService>();
             services.AddScoped<IInventory, InventoryService>();
             services.AddScoped<IShop, ShopService>();
         }

@@ -58,7 +58,9 @@ namespace NurseryApp.Controllers
 
                     Claim landscaperClaim = new Claim("Landscape", $"{user.Landscaper}");
 
-                    List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim };
+                    Claim idClaim = new Claim("id", $"{user.Id}");
+
+                    List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim, idClaim };
 
                     await _UserManager.AddClaimsAsync(user, claims);
 
