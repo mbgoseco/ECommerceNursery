@@ -44,6 +44,7 @@ namespace NurseryApp.Controllers
         /// </summary>
         /// <param name="id">Primary Key value</param>
         /// <returns>Details view of the selected product</returns>
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var product = await _context.GetProduct(id);

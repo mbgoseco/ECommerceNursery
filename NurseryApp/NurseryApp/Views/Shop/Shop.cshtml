@@ -10,7 +10,9 @@
   @foreach (var product in Model)
   {
       <div class="product">
-          <img class="product_img" src="@product.Img" alt="@product.Name" />
+          <a asp-action="Details" asp-controller="Shop" asp-route-ID="@product.ID">
+              <img class="product_img" src="@product.Img" alt="@product.Name" />
+          </a>
           <h2 class="product_name">@product.Name</h2>
           <h2 class="product_price">@product.Price</h2>
       </div>
