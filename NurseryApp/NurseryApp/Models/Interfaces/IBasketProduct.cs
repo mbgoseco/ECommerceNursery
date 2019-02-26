@@ -9,12 +9,12 @@ namespace NurseryApp.Models.Interfaces
     {
         Task AddBasketProduct(BasketProduct basketProduct);
 
-        Task<List<BasketProduct>> GetBasket();
+        Task<List<BasketProduct>> GetBasket(string userID);
 
-        Task<BasketProduct> GetBasketProductByID(int id);
+        Task<BasketProduct> GetBasketProductByID(string userID, int productID);
 
-        Task UpdateQuantity(Product basketProduct);
+        Task UpdateQuantity(BasketProduct basketProduct);
 
-        Task DeleteBasketProductByID(int id);
+        Task DeleteBasketProductByID(string userID, int productID);
     }
 }
