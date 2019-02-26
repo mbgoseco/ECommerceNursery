@@ -1,1 +1,11 @@
-﻿
+﻿@model IEnumerable<NurseryApp.Models.ViewModel.BasketProductViewModel>
+
+@foreach (var item in @Model)
+{
+    <div>
+        @item.Name
+        @item.Description
+        @item.Price
+        @item.Quantity
+    </div>
+}

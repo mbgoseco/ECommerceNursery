@@ -40,10 +40,10 @@ namespace NurseryApp
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:IdentityProductionConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:IdentityDefaultConnection"]));
 
             services.AddDbContext<NurseryDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
+                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddAuthorization(options =>
             {
@@ -52,6 +52,7 @@ namespace NurseryApp
 
             services.AddScoped<IAuthorizationHandler, LandscaperHandler>();
 
+            services.AddScoped<IBasketProduct, BasketProductService>();
             services.AddScoped<IInventory, InventoryService>();
             services.AddScoped<IShop, ShopService>();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NurseryApp.Models.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace NurseryApp.Models.Interfaces
     {
         Task AddBasketProduct(BasketProduct basketProduct);
 
-        Task<List<BasketProduct>> GetBasket(string userID);
+        Task<List<BasketProductViewModel>> GetBasket(string userID);
 
         Task<BasketProduct> GetBasketProductByID(string userID, int productID);
 

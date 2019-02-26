@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NurseryApp.Data;
 using NurseryApp.Models.Interfaces;
+using NurseryApp.Models.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace NurseryApp.Models.Services
     {
         private readonly NurseryDbContext _context;
 
-        public BasketProductService(NurseryDbContext context, ApplicationDbContext appContext)
+        public BasketProductService(NurseryDbContext context)
         {
             _context = context;
         }
@@ -29,10 +30,29 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<BasketProduct>> GetBasket(string userID)
+        public async Task<List<BasketProductViewModel>> GetBasket(string userID)
         {
-            IEnumerable<BasketProduct> list = await _context.BasketProducts.ToListAsync();
-            return list.Where(bp => bp.UserID == userID).ToList<BasketProduct>();
+            IEnumerable<BasketProduct> allProducts = await _context.BasketProducts.ToListAsync();
+            List<BasketProductViewModel> list = new List<BasketProductViewModel>();
+            foreach (var item in allProducts)
+            {
+                if(item.UserID == userID)
+                {
+                    BasketProductViewModel bpvm = new BasketProductViewModel();
+                    Product prd = _context.Products.FirstOrDefault(p => p.ID == item.ProductID);
+                    bpvm.ProductID = item.ProductID;
+                    bpvm.UserID = item.UserID;
+                    bpvm.Quantity = item.Quantity;
+                    bpvm.Name = prd.Name;
+                    bpvm.Type = prd.Type;
+                    bpvm.Description = prd.Description;
+                    bpvm.Price = prd.Price;
+                    bpvm.Sku = prd.Sku;
+                    bpvm.Bulk = prd.Bulk;
+                    list.Add(bpvm);
+                }
+            }
+            return list;
         }
 
         public async Task<BasketProduct> GetBasketProductByID(string userID, int productID)
