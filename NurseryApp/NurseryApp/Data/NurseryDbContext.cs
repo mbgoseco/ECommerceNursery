@@ -16,7 +16,7 @@ namespace NurseryApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BasketProduct>().HasKey(ce => new { ce.UserID, ce.ProductID });
+            modelBuilder.Entity<BasketProduct>().HasKey(ce => new { ce.ApplicationUserID, ce.ProductID });
             modelBuilder.Entity<Product>().HasData(
                 new Product
                 {
