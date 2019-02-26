@@ -242,6 +242,7 @@ namespace NurseryApp.Data
                 );
         }
         public DbSet<Product> Products { get; set; }
+        public DbSet<BasketProduct> BasketProducts { get; set; }
 
     }
 }

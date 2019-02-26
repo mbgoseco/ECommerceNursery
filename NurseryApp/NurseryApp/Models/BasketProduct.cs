@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace NurseryApp.Models
 {
-    public class Basket
+    public class BasketProduct
     {
         public string UserID { get; set; }
         public string ProductID { get; set; }
