@@ -1,0 +1,14 @@
+﻿@model NurseryApp.Models.Product
+
+@{
+    ViewData["Title"] = "Details";
+
+    Layout = "_Layout";
+}
+
+<div>
+    <img src="@Html.DisplayFor(model => model.Img)" />
+    <h2>@Html.DisplayFor(model => model.Name)</h2>
+    <h3>@Html.DisplayFor(model => model.Description)</h3>
+    <h3>@Html.DisplayFor(model => model.Price)</h3>
+</div>
