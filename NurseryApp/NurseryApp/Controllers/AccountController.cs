@@ -99,5 +99,81 @@ namespace NurseryApp.Controllers
 
             return View(lvm);
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _SignInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        public IActionResult ExternalLogin(string provider)
+        {
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account");
+            var properties = _SignInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+
+            return Challenge(properties, provider);
+        }
+       public async Task<IActionResult> ExternalLoginCallback(string error = null)
+        {
+            if (error != null)
+            {
+                TempData["Error"] = "Error with Proivder";
+                return RedirectToAction("Login");
+            }
+            var info = await _SignInManager.GetExternalLoginInfoAsync();
+
+            if(info == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            var result = await _SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+
+        }
+
+        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel elvm)
+        {
+            if (ModelState.IsValid)
+            {
+                var info = await _SignInManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    TempData["Error"] = "Error loading information";
+                }
+
+                var user = new ApplicationUser { UserName = elvm.Email, Email = elvm.Email, Birthday = elvm.Birthday, Landscaper = elvm.Landscaper, FirstName = elvm.FirstName, LastName = elvm.LastName };
+                var result = await _UserManager.CreateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    result = await _UserManager.AddLoginAsync(user, info);
+
+                    Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
+                    Claim birthdayClaim = new Claim(ClaimTypes.DateOfBirth, new DateTime(user.Birthday.Year, user.Birthday.Month, user.Birthday.Day).ToString("u"), ClaimValueTypes.DateTime);
+                    Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
+
+                    Claim landscaperClaim = new Claim("Landscape", $"{user.Landscaper}");
+
+                    Claim idClaim = new Claim("id", $"{user.Id}");
+
+                    List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim, idClaim };
+
+                    await _UserManager.AddClaimsAsync(user, claims);
+
+
+                    if (result.Succeeded)
+                    {
+                        await _SignInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            return View("ExternalLogin");
+        }
     }
 }
