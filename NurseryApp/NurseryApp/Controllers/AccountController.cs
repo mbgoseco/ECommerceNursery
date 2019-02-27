@@ -105,5 +105,7 @@ namespace NurseryApp.Controllers
             await _SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+       
     }
 }

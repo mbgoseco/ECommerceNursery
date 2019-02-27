@@ -51,9 +51,10 @@ namespace NurseryApp
                 options.AddPolicy("Landscaper", policy => policy.Requirements.Add(new LandscaperRequirement()));
             });
 
+
             //services.AddDefaultIdentity<IdentityUser>()
-            //   .AddDefaultUI(UIFramework.Bootstrap4)
-            //   .AddEntityFrameworkStores<ApplicationDbContext>();
+                //.AddDefaultUI(UIFramework.Bootstrap4)
+                //.AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
             {
