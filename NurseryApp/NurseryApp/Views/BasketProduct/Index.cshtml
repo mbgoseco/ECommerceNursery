@@ -6,13 +6,18 @@
         @item.Name
         @item.Description
         @item.Price
-        <form asp-action="Index" method="POST">
+        <form asp-action="Update" method="POST">
             <div asp-validation-summary="ModelOnly"></div>
             <input type="hidden" asp-for="@item.ProductID" id="id" name="id" value="@item.ProductID" />
             <label for="quantity"></label>
             <input type="number" asp-for="@item.Quantity" id="quantity" name="quantity" value="@item.Quantity" />
             <span asp-validation-for="@item.Quantity"></span>
-            <button type="submit"> Submit</button>
+            <button type="submit"> Update</button>
         </form>
-    </div>
+        <form asp-action="Delete" method="POST">
+            <input type="hidden" asp-for="@item.ProductID" id="id" name="id" value="@item.ProductID" />
+            <button type="submit"> Delete</button>
+        </form>
+
+</div>
 }

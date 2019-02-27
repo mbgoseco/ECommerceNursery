@@ -32,13 +32,21 @@ namespace NurseryApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(int id, int quantity)
+        public async Task<IActionResult> Update(int id, int quantity)
         {
             string userID = User.Claims.First(name => name.Type == "id").Value;
             
             BasketProduct basketProduct = await _context.GetBasketProductByID(userID, id);
             basketProduct.Quantity = quantity;
             await _context.UpdateQuantity(basketProduct);
+            return RedirectToAction("Index", "BasketProduct");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            string userID = User.Claims.First(name => name.Type == "id").Value;
+
+            await _context.DeleteBasketProductByID(userID, id);
             return RedirectToAction("Index", "BasketProduct");
         }
     }
