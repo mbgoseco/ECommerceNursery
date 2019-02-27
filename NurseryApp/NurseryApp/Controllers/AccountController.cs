@@ -105,6 +105,7 @@ namespace NurseryApp.Controllers
             await _SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
         public IActionResult ExternalLogin(string provider)
         {
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account");
@@ -112,6 +113,7 @@ namespace NurseryApp.Controllers
 
             return Challenge(properties, provider);
         }
+
        public async Task<IActionResult> ExternalLoginCallback(string error = null)
         {
             if (error != null)
