@@ -99,5 +99,11 @@ namespace NurseryApp.Controllers
 
             return View(lvm);
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _SignInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
