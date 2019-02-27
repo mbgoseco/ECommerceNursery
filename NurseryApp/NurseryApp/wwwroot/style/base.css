@@ -134,12 +134,25 @@ img1-div, img4-div, img2-div, img3-div {
     margin: 2vw;
 }
 
+.details {
+    background-color: hsla(0, 59%, 100%, 0.79);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.detail_text {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
 .product_img {
     width: 25vw;
     height: 25vh;
 }
 
-.product_name, .product_price {
+.product_name, .product_price, .product_description {
     font-family: Verdana;
     font-size: 1rem;
     margin: 1vw;

@@ -9,7 +9,7 @@ namespace NurseryApp.Models.Interfaces
     public interface IBasketProduct
     {
 
-        Task AddBasketProduct(BasketProduct basketProduct);
+        Task AddBasketProduct(int id, int quantity, string userID);
 
         Task<List<BasketProductViewModel>> GetBasket(string userID);
 
