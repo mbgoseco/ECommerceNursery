@@ -32,6 +32,16 @@ namespace NurseryApp.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Add(int id, int quantity)
+        {
+            string userID = User.Claims.First(name => name.Type == "id").Value;
+
+            await _context.AddBasketProduct(id, quantity, userID);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Update(int id, int quantity)
         {
             string userID = User.Claims.First(name => name.Type == "id").Value;
@@ -41,6 +51,7 @@ namespace NurseryApp.Controllers
             await _context.UpdateQuantity(basketProduct);
             return RedirectToAction("Index", "BasketProduct");
         }
+
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {

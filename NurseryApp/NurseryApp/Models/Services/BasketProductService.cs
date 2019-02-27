@@ -17,8 +17,17 @@ namespace NurseryApp.Models.Services
         {
             _context = context;
         }
-        public async Task AddBasketProduct(BasketProduct basketProduct)
+
+        public async Task AddBasketProduct(int id, int quantity, string userID)
         {
+            Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
+            BasketProduct basketProduct = new BasketProduct
+            {
+                Product = product,
+                ProductID = product.ID,
+                Quantity = quantity,
+                UserID = userID
+            };
             _context.BasketProducts.Add(basketProduct);
             await _context.SaveChangesAsync();
         }
