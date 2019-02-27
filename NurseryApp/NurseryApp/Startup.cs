@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,6 +49,16 @@ namespace NurseryApp
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Landscaper", policy => policy.Requirements.Add(new LandscaperRequirement()));
+            });
+
+            //services.AddDefaultIdentity<IdentityUser>()
+            //   .AddDefaultUI(UIFramework.Bootstrap4)
+            //   .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
+                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
             });
 
             services.AddScoped<IAuthorizationHandler, LandscaperHandler>();
