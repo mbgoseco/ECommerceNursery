@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<NurseryApp.Models.ViewModel.BasketProductViewModel>
+@{ 
+    Layout = "_Layout";
+}
 
+@if (Model.Count() < 1)
+{
+    <p> No Products in Cart!</p>
+}
 @foreach (var item in @Model)
 {
     <div>
