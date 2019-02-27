@@ -20,7 +20,7 @@ namespace NurseryApp.Controllers
         {
             _context = context;
         }
-
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
