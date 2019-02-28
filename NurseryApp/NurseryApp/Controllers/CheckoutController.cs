@@ -27,7 +27,7 @@ namespace NurseryApp.Controllers
             _checkoutProduct = checkoutProduct;
         }
 
-        public async Task<IActionResult> Reciept()
+        public async Task<IActionResult> Receipt()
         {
             string userEmail = User.Identity.Name;
             var userRaw = await _userManager.FindByEmailAsync(userEmail);
