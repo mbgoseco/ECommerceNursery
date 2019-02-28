@@ -27,7 +27,7 @@ namespace NurseryApp.Controllers
             _checkoutProduct = checkoutProduct;
         }
 
-        public async Task<IActionResult> Reciept()
+        public async Task<IActionResult> Receipt()
         {
             string userEmail = User.Identity.Name;
             var userRaw = await _userManager.FindByEmailAsync(userEmail);
@@ -44,7 +44,6 @@ namespace NurseryApp.Controllers
                 await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
                 bp.BasketID = checkout.ID;
             }
-
             return View(basketProducts);
         }
     }

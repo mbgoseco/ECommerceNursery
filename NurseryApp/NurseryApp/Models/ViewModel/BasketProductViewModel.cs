@@ -18,5 +18,7 @@ namespace NurseryApp.Models.ViewModel
         public string Img { get; set; }
         public string Sku { get; set; }
         public bool Bulk { get; set; }
+        public decimal ProductTotal { get; set; }
+        public decimal Total { get; set; }
     }
 }
