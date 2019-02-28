@@ -151,7 +151,8 @@ namespace NurseryApp.Controllers
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("<h1>Welcome to Binary Tree Nursery<h1>");
                 sb.AppendLine("<h2>We're glad you're here<h2>");
-                await _emailSender.SendEmailAsync(User.Identity.Name, "Thanks for Signing In!", sb.ToString());
+                string userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
+                await _emailSender.SendEmailAsync(userEmail, "Thanks for Signing In!", sb.ToString());
                 return RedirectToAction("Index", "Home");
             }
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
