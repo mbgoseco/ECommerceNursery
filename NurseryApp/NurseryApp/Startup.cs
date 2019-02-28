@@ -82,6 +82,7 @@ namespace NurseryApp
             services.AddScoped<IBasketProduct, BasketProductService>();
             services.AddScoped<IInventory, InventoryService>();
             services.AddScoped<IShop, ShopService>();
+            services.AddScoped<IBasket, BasketService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace NurseryApp.Models.Services
 {
-    public class BasketController : IBasket
+    public class BasketService : IBasket
     {
         private readonly NurseryDbContext _context;
 
-        public BasketController(NurseryDbContext context)
+        public BasketService(NurseryDbContext context)
         {
             _context = context;
         }

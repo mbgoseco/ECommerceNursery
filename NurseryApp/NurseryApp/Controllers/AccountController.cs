@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NurseryApp.Models;
+using NurseryApp.Models.Interfaces;
 using NurseryApp.Models.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,14 @@ namespace NurseryApp.Controllers
         private UserManager<ApplicationUser> _UserManager;
         private SignInManager<ApplicationUser> _SignInManager;
         private IConfiguration _context;
+        private IBasket _basket;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration context)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration context, IBasket basket)
         {
             _UserManager = userManager;
             _SignInManager = signInManager;
             _context = context;
+            _basket = basket;
         }
 
         /// <summary>
@@ -57,6 +60,7 @@ namespace NurseryApp.Controllers
                 {
                     Basket basket = new Basket();
                     basket.UserID = user.Id;
+                    await _basket.CreateBasketAsync(basket);
                     Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
                     Claim birthdayClaim = new Claim(ClaimTypes.DateOfBirth, new DateTime(user.Birthday.Year, user.Birthday.Month, user.Birthday.Day).ToString("u"), ClaimValueTypes.DateTime);
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
@@ -160,6 +164,8 @@ namespace NurseryApp.Controllers
                 {
                     Basket basket = new Basket();
                     basket.UserID = user.Id;
+                    await _basket.CreateBasketAsync(basket);
+                    
 
 
                     result = await _UserManager.AddLoginAsync(user, info);
