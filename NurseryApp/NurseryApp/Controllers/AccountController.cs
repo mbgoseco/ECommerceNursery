@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using NurseryApp.Models;
 using NurseryApp.Models.ViewModel;
 using System;
@@ -14,11 +15,13 @@ namespace NurseryApp.Controllers
     {
         private UserManager<ApplicationUser> _UserManager;
         private SignInManager<ApplicationUser> _SignInManager;
+        private IConfiguration _context;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration context)
         {
             _UserManager = userManager;
             _SignInManager = signInManager;
+            _context = context;
         }
 
         /// <summary>
@@ -52,6 +55,8 @@ namespace NurseryApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    Basket basket = new Basket();
+                    basket.UserID = user.Id;
                     Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
                     Claim birthdayClaim = new Claim(ClaimTypes.DateOfBirth, new DateTime(user.Birthday.Year, user.Birthday.Month, user.Birthday.Day).ToString("u"), ClaimValueTypes.DateTime);
                     Claim emailClaim = new Claim(ClaimTypes.Email, user.Email, ClaimValueTypes.Email);
@@ -153,6 +158,10 @@ namespace NurseryApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    Basket basket = new Basket();
+                    basket.UserID = user.Id;
+
+
                     result = await _UserManager.AddLoginAsync(user, info);
 
                     Claim fullNameClaim = new Claim("FullName", $"{user.FirstName} {user.LastName}");
