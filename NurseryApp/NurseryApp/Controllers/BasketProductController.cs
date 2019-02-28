@@ -50,7 +50,7 @@ namespace NurseryApp.Controllers
 
             await _basketProduct.AddBasketProduct(id, quantity, basket.ID);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "BasketProduct");
         }
 
         [HttpPost]
