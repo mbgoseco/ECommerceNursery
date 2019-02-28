@@ -3,12 +3,13 @@
     Layout = "_Layout";
 }
 
-@if (Model.Count() < 1)
-{
-    <p> No Products in Cart!</p>
-}
-@foreach (var item in @Model)
-{
+<body>
+    @if (Model.Count() < 1)
+    {
+        <p> No Products in Cart!</p>
+    }
+    @foreach (var item in @Model)
+    {
     <div>
         @item.Name
         @item.Description
@@ -26,5 +27,8 @@
             <button type="submit"> Delete</button>
         </form>
 
-</div>
-}
+    </div>
+    }
+
+    <button asp-action="Receipt" asp-controller="Checkout">CHECKOUT</button>
+</body>
