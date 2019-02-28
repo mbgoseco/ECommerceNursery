@@ -29,7 +29,16 @@
         <form asp-action="ExternalLogin">
             @foreach (var provider in loginProviders)
             {
-                <button type="submit" name="provider" value="@provider.Name" title="Login user @provider.DisplayName">@provider.Name</button>
+            <button type="submit" name="provider" value="@provider.Name" title="Login user @provider.DisplayName">
+                @if (provider.Name == "Microsoft")
+                {
+                    <i class="fab fa-windows"></i>
+                }
+                @if (provider.Name == "Google")
+                {
+                    <i class="fab fa-google"></i>
+                }
+            </button>
             }
         </form>
         
