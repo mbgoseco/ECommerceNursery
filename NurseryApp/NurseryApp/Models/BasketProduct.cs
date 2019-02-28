@@ -7,7 +7,7 @@ namespace NurseryApp.Models
 {
     public class BasketProduct
     {
-        public string UserID { get; set; }
+        public int BasketID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
 

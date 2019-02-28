@@ -8,7 +8,7 @@ namespace NurseryApp.Models.ViewModel
 {
     public class BasketProductViewModel
     {
-        public string UserID { get; set; }
+        public int BasketID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
         public string Name { get; set; }

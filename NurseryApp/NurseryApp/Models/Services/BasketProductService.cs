@@ -18,7 +18,7 @@ namespace NurseryApp.Models.Services
             _context = context;
         }
 
-        public async Task AddBasketProduct(int id, int quantity, string userID)
+        public async Task AddBasketProduct(int id, int quantity, int basketID)
         {
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
             BasketProduct basketProduct = new BasketProduct
@@ -26,31 +26,32 @@ namespace NurseryApp.Models.Services
                 Product = product,
                 ProductID = product.ID,
                 Quantity = quantity,
-                UserID = userID
+                BasketID = basketID
             };
             _context.BasketProducts.Add(basketProduct);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteBasketProductByID(string userID, int productID )
+        public async Task DeleteBasketProductByID(int basketID, int productID )
         {
-            BasketProduct basketProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.UserID == userID && bp.ProductID == productID);
+            BasketProduct basketProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.BasketID == basketID && bp.ProductID == productID);
             _context.BasketProducts.Remove(basketProduct);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<BasketProductViewModel>> GetBasket(string userID)
+        public async Task<List<BasketProductViewModel>> GetBasket(int basketID)
         {
-            IEnumerable<BasketProduct> allProducts = await _context.BasketProducts.ToListAsync();
+            IEnumerable<BasketProduct> allProducts1 = await _context.BasketProducts.ToListAsync();
+            IEnumerable<BasketProduct> allProducts = allProducts1.Where(p => p.BasketID == basketID);
             List<BasketProductViewModel> list = new List<BasketProductViewModel>();
             foreach (var item in allProducts)
             {
-                if(item.UserID == userID)
+                if(item.BasketID == basketID)
                 {
                     BasketProductViewModel bpvm = new BasketProductViewModel();
                     Product prd = _context.Products.FirstOrDefault(p => p.ID == item.ProductID);
                     bpvm.ProductID = item.ProductID;
-                    bpvm.UserID = item.UserID;
+                    bpvm.BasketID = item.BasketID;
                     bpvm.Quantity = item.Quantity;
                     bpvm.Name = prd.Name;
                     bpvm.Type = prd.Type;
@@ -64,9 +65,9 @@ namespace NurseryApp.Models.Services
             return list;
         }
 
-        public async Task<BasketProduct> GetBasketProductByID(string userID, int productID)
+        public async Task<BasketProduct> GetBasketProductByID(int basketID, int productID)
         {
-            BasketProduct basketProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.UserID == userID && bp.ProductID == productID);
+            BasketProduct basketProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.BasketID == basketID && bp.ProductID == productID);
             return basketProduct;
         }
 

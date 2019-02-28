@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NurseryApp.Data;
 using NurseryApp.Models;
@@ -13,20 +14,28 @@ namespace NurseryApp.Controllers
 {
     public class BasketProductController : Controller
     {
-        private readonly IBasketProduct _context;
+        private readonly IBasketProduct _basketProduct;
+        private readonly IBasket _basket;
+
+        private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public BasketProductController(IBasketProduct context)
+        public BasketProductController(IBasketProduct basketProduct, IBasket basket, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            _basketProduct = basketProduct;
+            _basket = basket;
+            _userManager = userManager;
         }
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            string userID = User.Claims.First(name => name.Type == "id").Value;
+            string userEmail = User.Identity.Name;
+            var userRaw = await _userManager.FindByEmailAsync(userEmail);
+            string userID = userRaw.Id;
+            var basket = await _basket.GetBasketByUserId(userID);
 
-            var products = await _context.GetBasket(userID);
+            var products = await _basketProduct.GetBasket(basket.ID);
 
             return View(products);
         }
@@ -34,9 +43,12 @@ namespace NurseryApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(int id, int quantity)
         {
-            string userID = User.Claims.First(name => name.Type == "id").Value;
+            string userEmail = User.Identity.Name;
+            var userRaw = await _userManager.FindByEmailAsync(userEmail);
+            string userID = userRaw.Id;
+            var basket = await _basket.GetBasketByUserId(userID);
 
-            await _context.AddBasketProduct(id, quantity, userID);
+            await _basketProduct.AddBasketProduct(id, quantity, basket.ID);
 
             return RedirectToAction("Index", "Home");
         }
@@ -44,20 +56,26 @@ namespace NurseryApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(int id, int quantity)
         {
-            string userID = User.Claims.First(name => name.Type == "id").Value;
-            
-            BasketProduct basketProduct = await _context.GetBasketProductByID(userID, id);
+            string userEmail = User.Identity.Name;
+            var userRaw = await _userManager.FindByEmailAsync(userEmail);
+            string userID = userRaw.Id;
+            var basket = await _basket.GetBasketByUserId(userID);
+
+            BasketProduct basketProduct = await _basketProduct.GetBasketProductByID(basket.ID, id);
             basketProduct.Quantity = quantity;
-            await _context.UpdateQuantity(basketProduct);
+            await _basketProduct.UpdateQuantity(basketProduct);
             return RedirectToAction("Index", "BasketProduct");
         }
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            string userID = User.Claims.First(name => name.Type == "id").Value;
+            string userEmail = User.Identity.Name;
+            var userRaw = await _userManager.FindByEmailAsync(userEmail);
+            string userID = userRaw.Id;
+            var basket = await _basket.GetBasketByUserId(userID);
 
-            await _context.DeleteBasketProductByID(userID, id);
+            await _basketProduct.DeleteBasketProductByID(basket.ID, id);
             return RedirectToAction("Index", "BasketProduct");
         }
     }
