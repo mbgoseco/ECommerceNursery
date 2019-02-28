@@ -23,13 +23,22 @@
             <div class="master-nav-item register-nav">
                 @if (signInManager.IsSignedIn(User))
                 {
+                    <a href="/Account/Logout">LogOut</a>
+                }
+                else
+                {
+                    <a href="/Account/Login">Login</a>
+                }
+            </div>
+            <div class="master-nav-item register-nav">
+                @if (signInManager.IsSignedIn(User))
+                {
                     <a href="">Welcome @User.Claims.First(name => name.Type == "FullName").Value!</a>
                     <div class=" login-drop hidden"> <a href="">Placeholder</a></div>
                 }
                 else
                 {
-                    <a href="/Account/Login">Login</a>
-                    <div class=" login-drop hidden"> <a href="/Account/Register">Register</a></div>
+                    <a href="/Account/Register">Register</a>
                 }
             </div>
             <div class="master-nav-item dropdown-nav product-nav"><a asp-action="Shop" asp-controller="Shop">Products</a></div>
