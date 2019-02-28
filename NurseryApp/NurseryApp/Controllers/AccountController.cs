@@ -105,6 +105,10 @@ namespace NurseryApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("<h1>Welcome to Binary Tree Nursery<h1>");
+                    sb.AppendLine("<h2>We're glad you're here<h2>");
+                    await _emailSender.SendEmailAsync(lvm.Email, "Thanks for Signing In!", sb.ToString());
                     return RedirectToAction("Index", "Home");
                 }
             }
