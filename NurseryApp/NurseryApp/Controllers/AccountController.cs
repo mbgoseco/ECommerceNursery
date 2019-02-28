@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NurseryApp.Models;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace NurseryApp.Controllers
@@ -18,13 +20,15 @@ namespace NurseryApp.Controllers
         private SignInManager<ApplicationUser> _SignInManager;
         private IConfiguration _context;
         private IBasket _basket;
+        private IEmailSender _emailSender;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration context, IBasket basket)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration context, IBasket basket, IEmailSender emailsender)
         {
             _UserManager = userManager;
             _SignInManager = signInManager;
             _context = context;
             _basket = basket;
+            _emailSender = emailsender;
         }
 
         /// <summary>
@@ -101,6 +105,10 @@ namespace NurseryApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("<h1>Welcome to Binary Tree Nursery<h1>");
+                    sb.AppendLine("<h2>We're glad you're here<h2>");
+                    await _emailSender.SendEmailAsync(lvm.Email, "Thanks for Signing In!", sb.ToString());
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -140,6 +148,10 @@ namespace NurseryApp.Controllers
             var result = await _SignInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("<h1>Welcome to Binary Tree Nursery<h1>");
+                sb.AppendLine("<h2>We're glad you're here<h2>");
+                await _emailSender.SendEmailAsync(User.Identity.Name, "Thanks for Signing In!", sb.ToString());
                 return RedirectToAction("Index", "Home");
             }
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
