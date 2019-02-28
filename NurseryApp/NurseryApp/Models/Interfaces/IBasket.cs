@@ -7,8 +7,10 @@ namespace NurseryApp.Models.Interfaces
 {
     public interface IBasket
     {
-        Task CreateBasket(Basket basket);
+        Task CreateBasketAsync(Basket basket);
 
-        Task UpdateBasket(Basket basket);
+        Task UpdateBasketAsync(Basket basket);
+
+        Task<Basket> GetBasketByUserId(string userID);
     }
 }

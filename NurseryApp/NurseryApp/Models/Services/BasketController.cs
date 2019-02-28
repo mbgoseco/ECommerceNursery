@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using NurseryApp.Data;
 using NurseryApp.Models.Interfaces;
 using System;
@@ -16,14 +17,22 @@ namespace NurseryApp.Models.Services
         {
             _context = context;
         }
-        public Task CreateBasket(Basket basket)
+        public async Task CreateBasketAsync(Basket basket)
         {
-            _context.
+            _context.Baskets.Add(basket);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateBasket(Basket basket)
+        public async Task UpdateBasketAsync(Basket basket)
         {
-            throw new NotImplementedException();
+            _context.Baskets.Update(basket);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Basket> GetBasketByUserId(string userID)
+        {
+            Basket basket = await _context.Baskets.FirstOrDefaultAsync(b => b.UserID == userID);
+            return basket;
         }
     }
 }
