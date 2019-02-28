@@ -11,6 +11,6 @@ namespace NurseryApp.Models.Interfaces
 
         Task UpdateCheckoutAsync(Checkout checkout);
 
-        Task<Basket> GetCheckoutByUserId(string userID);
+        Task<Checkout> GetCheckoutByUserId(string userID);
     }
 }

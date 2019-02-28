@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using NurseryApp.Data;
 using NurseryApp.Models.Interfaces;
 using System;
@@ -20,19 +21,19 @@ namespace NurseryApp.Models.Services
         }
         public async Task CreateCheckoutAsync(Checkout checkout)
         {
-            _context.Checkout.Add(checkout);
+            _context.Checkouts.Add(checkout);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Basket> GetCheckoutByUserId(string userID)
+        public async Task<Checkout> GetCheckoutByUserId(string userID)
         {
-            return await _context.Checkout.FirstOfDefaultAsync(c => c.UserID == userID);
+            return await _context.Checkouts.FirstOrDefaultAsync(c => c.UserID == userID);
 
         }
 
         public async Task UpdateCheckoutAsync(Checkout checkout)
         {
-            _context.Checkout.Update(checkout);
+            _context.Checkouts.Update(checkout);
             await _context.SaveChangesAsync();
         }
     }
