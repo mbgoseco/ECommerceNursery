@@ -44,6 +44,7 @@ namespace NurseryApp.Models.Services
             IEnumerable<BasketProduct> allProducts1 = await _context.BasketProducts.ToListAsync();
             IEnumerable<BasketProduct> allProducts = allProducts1.Where(p => p.BasketID == basketID);
             List<BasketProductViewModel> list = new List<BasketProductViewModel>();
+            decimal Total = 0;
             foreach (var item in allProducts)
             {
                 if(item.BasketID == basketID)
@@ -59,7 +60,13 @@ namespace NurseryApp.Models.Services
                     bpvm.Price = prd.Price;
                     bpvm.Sku = prd.Sku;
                     bpvm.Bulk = prd.Bulk;
+                    bpvm.ProductTotal = (prd.Price * item.Quantity);
+                    Total += bpvm.ProductTotal;                    
                     list.Add(bpvm);
+                }
+                foreach (var product in list)
+                {
+                    product.Total = Total;
                 }
             }
             return list;

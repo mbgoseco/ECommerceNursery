@@ -85,6 +85,7 @@ namespace NurseryApp
             services.AddScoped<IShop, ShopService>();
             services.AddScoped<IBasket, BasketService>();
             services.AddScoped<ICheckout, CheckoutService>();
+            services.AddScoped<ICheckoutProduct, CheckoutProductService>();
             
             services.AddScoped<IEmailSender, EmailSender>();
         }

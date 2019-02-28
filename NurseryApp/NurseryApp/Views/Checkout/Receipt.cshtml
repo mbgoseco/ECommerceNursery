@@ -1,0 +1,14 @@
+﻿@model IEnumerable<NurseryApp.Models.ViewModel.BasketProductViewModel>
+
+@foreach (var item in @Model)
+{
+    <div>
+        name: @item.Name
+        Descriptin: @item.Description
+        Individual Price: @item.Price
+        Quantity: @item.Quantity
+        Total Price: @item.ProductTotal
+
+    </div>
+}
+TOTAL: @Model.ToArray()[0].Total
