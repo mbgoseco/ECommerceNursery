@@ -26,6 +26,11 @@ namespace NurseryApp.Controllers
             _basket = basket;
             _userManager = userManager;
         }
+
+        /// <summary>
+        /// Takes user to the basket page showing items in their basket
+        /// </summary>
+        /// <returns>Basket page</returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -40,6 +45,12 @@ namespace NurseryApp.Controllers
             return View(products);
         }
 
+        /// <summary>
+        /// Takes a product ID and quantity from the view form and gives it to AddBasketProduct service
+        /// </summary>
+        /// <param name="id">Primary Key value</param>
+        /// <param name="quantity">Quantity of product</param>
+        /// <returns>View of user's basket with added product</returns>
         [HttpPost]
         public async Task<IActionResult> Add(int id, int quantity)
         {
@@ -53,6 +64,12 @@ namespace NurseryApp.Controllers
             return RedirectToAction("Index", "BasketProduct");
         }
 
+        /// <summary>
+        /// Calls the UpdateQuantity service to update an basket item matching the id with the given quantity
+        /// </summary>
+        /// <param name="id">Primary Key value</param>
+        /// <param name="quantity">Quantity to update</param>
+        /// <returns>Basket view</returns>
         [HttpPost]
         public async Task<IActionResult> Update(int id, int quantity)
         {
@@ -67,6 +84,11 @@ namespace NurseryApp.Controllers
             return RedirectToAction("Index", "BasketProduct");
         }
 
+        /// <summary>
+        /// Calls the DeleteBasketProductByID service to delete a basket item matching the given ID
+        /// </summary>
+        /// <param name="id">Primary Key value</param>
+        /// <returns>Basket view</returns>
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
