@@ -21,7 +21,7 @@ namespace NurseryApp.Models.Services
         }
 
         /// <summary>
-        /// Creates a checkout order to the table
+        /// Adds a checkout order to the table
         /// </summary>
         /// <param name="checkout">Checkout object</param>
         /// <returns>Checkout order added to table</returns>
