@@ -18,6 +18,13 @@ namespace NurseryApp.Models.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Creates a new basketProduct object and adds it to the BasketProduct table
+        /// </summary>
+        /// <param name="id">Primary Key value of product</param>
+        /// <param name="quantity">Quantity of product</param>
+        /// <param name="basketID">Composite Key value</param>
+        /// <returns>New basketProduct added to table</returns>
         public async Task AddBasketProduct(int id, int quantity, int basketID)
         {
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
@@ -32,6 +39,12 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Deletes a basketProduct item from the table matching composite keys
+        /// </summary>
+        /// <param name="basketID">Composite basket key</param>
+        /// <param name="productID">Composite product key</param>
+        /// <returns>Product removed from basket</returns>
         public async Task DeleteBasketProductByID(int basketID, int productID )
         {
             BasketProduct basketProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.BasketID == basketID && bp.ProductID == productID);
@@ -39,6 +52,11 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Creates a list of all items in the BasketProducts table
+        /// </summary>
+        /// <param name="basketID">Composite Key value</param>
+        /// <returns>List of basket products</returns>
         public async Task<List<BasketProductViewModel>> GetBasket(int basketID)
         {
             IEnumerable<BasketProduct> allProducts1 = await _context.BasketProducts.ToListAsync();
@@ -72,12 +90,23 @@ namespace NurseryApp.Models.Services
             return list;
         }
 
+        /// <summary>
+        /// Gets a specific BasketProduct item matching the composite keys
+        /// </summary>
+        /// <param name="basketID">Composite basket key</param>
+        /// <param name="productID">Composite product key</param>
+        /// <returns>Matching BasketProduct item</returns>
         public async Task<BasketProduct> GetBasketProductByID(int basketID, int productID)
         {
             BasketProduct basketProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.BasketID == basketID && bp.ProductID == productID);
             return basketProduct;
         }
 
+        /// <summary>
+        /// Updates a BasketProduct item with new basketProduct properties
+        /// </summary>
+        /// <param name="basketProduct">basketProduct object with new properties</param>
+        /// <returns>Updated item</returns>
         public async Task UpdateQuantity(BasketProduct basketProduct)
         {
             _context.BasketProducts.Update(basketProduct);

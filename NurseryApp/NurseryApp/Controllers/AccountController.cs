@@ -117,12 +117,21 @@ namespace NurseryApp.Controllers
             return View(lvm);
         }
 
+        /// <summary>
+        /// Logs a user out
+        /// </summary>
+        /// <returns>Main page</returns>
         public async Task<IActionResult> Logout()
         {
             await _SignInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Directs a user to the external login page of their choice
+        /// </summary>
+        /// <param name="provider">Name of third party authenticator</param>
+        /// <returns>Challenge result of given provider and properties</returns>
         public IActionResult ExternalLogin(string provider)
         {
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account");
@@ -131,6 +140,11 @@ namespace NurseryApp.Controllers
             return Challenge(properties, provider);
         }
 
+        /// <summary>
+        /// Requests OAuth token if login callback returns without errors
+        /// </summary>
+        /// <param name="error">Incoming error message if exists</param>
+        /// <returns>Home page view with user logged in if successful</returns>
        public async Task<IActionResult> ExternalLoginCallback(string error = null)
         {
             if (error != null)
@@ -160,6 +174,11 @@ namespace NurseryApp.Controllers
 
         }
 
+        /// <summary>
+        /// Registers a new user with their their party user properties.
+        /// </summary>
+        /// <param name="elvm">External Login View Model</param>
+        /// <returns>Home page view with user logged in if successful</returns>
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel elvm)
         {
             if (ModelState.IsValid)

@@ -21,6 +21,10 @@ namespace NurseryApp.Models.Components
             _basket = basket;
         }
 
+        /// <summary>
+        /// Invokes the component view of the user's shopping basket
+        /// </summary>
+        /// <returns>Component view of basket</returns>
         public async Task<IViewComponentResult> InvokeAsync()
         {
             string userEmail = User.Identity.Name;

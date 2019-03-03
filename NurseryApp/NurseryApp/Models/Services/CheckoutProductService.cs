@@ -18,6 +18,13 @@ namespace NurseryApp.Models.Services
             _context = context;
         }
 
+        /// <summary>
+        /// Adds a product to the user's list of checkout products
+        /// </summary>
+        /// <param name="id">Product ID</param>
+        /// <param name="quantity">Quantity of product</param>
+        /// <param name="checkoutID">Checkout ID</param>
+        /// <returns>Product added to checkoutProduct list</returns>
         public async Task AddCheckoutProduct(int id, int quantity, int checkoutID)
         {
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
@@ -32,6 +39,12 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Deletes a product matching the product ID from the checkout container matching the checkout ID
+        /// </summary>
+        /// <param name="checkoutID">Composite Key value</param>
+        /// <param name="productID">Composite Key value</param>
+        /// <returns>Product deleted from checkout</returns>
         public async Task DeleteCheckoutProductByID(int checkoutID, int productID )
         {
             CheckoutProduct checkoutProduct = await _context.CheckoutProducts.FirstOrDefaultAsync(cp => cp.CheckoutID == checkoutID && cp.ProductID == productID);
@@ -39,6 +52,11 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets a checkout container matching the checkout ID
+        /// </summary>
+        /// <param name="checkoutID">Composite Key value</param>
+        /// <returns>Matching checkout container</returns>
         public async Task<List<BasketProductViewModel>> GetCheckout(int checkoutID)
         {
             IEnumerable<CheckoutProduct> allProducts1 = await _context.CheckoutProducts.ToListAsync();
@@ -65,12 +83,23 @@ namespace NurseryApp.Models.Services
             return list;
         }
 
+        /// <summary>
+        /// Gets a specific product from a specific checkout product list matching the ID
+        /// </summary>
+        /// <param name="checkoutID">Composite Key value</param>
+        /// <param name="productID">Composite Key value</param>
+        /// <returns>Matching checkout product</returns>
         public async Task<BasketProduct> GetCheckoutProductByID(int checkoutID, int productID)
         {
             BasketProduct checkoutProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.BasketID == checkoutID && bp.ProductID == productID);
             return checkoutProduct;
         }
 
+        /// <summary>
+        /// Updates quantity of a product in the checkout product list
+        /// </summary>
+        /// <param name="checkoutProduct">CheckoutProduct object with new data</param>
+        /// <returns>Updated checkout product list</returns>
         public async Task UpdateQuantity(CheckoutProduct checkoutProduct)
         {
             _context.CheckoutProducts.Update(checkoutProduct);
