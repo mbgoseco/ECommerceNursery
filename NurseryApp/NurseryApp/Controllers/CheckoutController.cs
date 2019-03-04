@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using NurseryApp.Models;
@@ -35,6 +36,7 @@ namespace NurseryApp.Controllers
         /// Creates a receipt of a user's basket contents, takes the user to a view displaying the receipt, and emails them an invoice.
         /// </summary>
         /// <returns>Receipt view with ordered products</returns>
+        [Authorize]
         public async Task<IActionResult> Receipt()
         {
             string userEmail = User.Identity.Name;
