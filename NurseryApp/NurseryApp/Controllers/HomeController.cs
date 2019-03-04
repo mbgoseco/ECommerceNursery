@@ -14,14 +14,5 @@ namespace NurseryApp.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Action for policy testing
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(Policy = "Landscaper")]
-        public IActionResult Test()
-        {
-            return View();
-        }
     }
 }
