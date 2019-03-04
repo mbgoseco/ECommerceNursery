@@ -1,32 +1,40 @@
 ﻿@model NurseryApp.Models.ViewModel.CheckoutViewModel;
 
 <h3> Checkout </h3>
-<form>
+<form asp-for="Checkout" method="post">
     <p>Credit Card Information</p>
-    <label asp-for="@Model.Name"> </label>
-    <input asp-for="@Model.Name"/>
+    <label asp-for="Name"> </label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
 
-    <label asp-for="@Model.CC"></label>
-    <input asp-for="@Model.CC" />
+    <label asp-for="CC"></label>
+    <input asp-for="CC" />
+    <span asp-validation-for="CC"></span>
 
-    <label asp-for="@Model.CVV"></label>
-    <input asp-for="@Model.CVV" />
+    <label asp-for="CVV"></label>
+    <input asp-for="CVV" />
+    <span asp-validation-for="CVV"></span>
 
-    <label asp-for="@Model.ExpirationDate"></label>
-    <input asp-for="@Model.ExpirationDate" />
+    <label asp-for="ExpirationDate"></label>
+    <input asp-for="ExpirationDate" />
+    <span asp-validation-for="ExpirationDate"></span>
 
     <p>Billing Address</p>
-    <label asp-for="@Model.Address"></label>
-    <input asp-for="@Model.Address" />
+    <label asp-for="Address"></label>
+    <input asp-for="Address" />
+    <span asp-validation-for="Address"></span>
 
-    <label asp-for="@Model.City"></label>
-    <input asp-for="@Model.City" />
+    <label asp-for="City"></label>
+    <input asp-for="City" />
+    <span asp-validation-for="City"></span>
 
-    <label asp-for="@Model.State"></label>
-    <input asp-for="@Model.State" />
+    <label asp-for="State"></label>
+    <input asp-for="State" />
+    <span asp-validation-for="State"></span>
 
-    <label asp-for="@Model.ZipCode"></label>
-    <input asp-for="@Model.ZipCode" />
+    <label asp-for="ZipCode"></label>
+    <input asp-for="ZipCode" />
+    <span asp-validation-for="ZipCode"></span>
 
     <button type="Submit">Place Order</button>
 </form>
