@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,10 +54,40 @@ namespace NurseryApp
                 options.AddPolicy("Landscaper", policy => policy.Requirements.Add(new LandscaperRequirement()));
             });
 
+
+            //services.AddDefaultIdentity<IdentityUser>()
+                //.AddDefaultUI(UIFramework.Bootstrap4)
+                //.AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = Configuration["MicrosoftApplicationId"];
+                microsoftOptions.ClientSecret = Configuration["MicrosoftPassword"];
+            })
+            .AddGoogle(o =>
+            {
+                o.ClientId = Configuration["GoogleClientId"];
+                o.ClientSecret = Configuration["GoogleClientSecret"];
+                o.UserInformationEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo";
+                o.ClaimActions.Clear();
+                o.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+                o.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                o.ClaimActions.MapJsonKey(ClaimTypes.GivenName, "given_name");
+                o.ClaimActions.MapJsonKey(ClaimTypes.Surname, "family_name");
+                o.ClaimActions.MapJsonKey("urn:google:profile", "link");
+                o.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+            }); 
+
             services.AddScoped<IAuthorizationHandler, LandscaperHandler>();
 
+            services.AddScoped<IBasketProduct, BasketProductService>();
             services.AddScoped<IInventory, InventoryService>();
             services.AddScoped<IShop, ShopService>();
+            services.AddScoped<IBasket, BasketService>();
+            services.AddScoped<ICheckout, CheckoutService>();
+            services.AddScoped<ICheckoutProduct, CheckoutProductService>();
+            
+            services.AddScoped<IEmailSender, EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

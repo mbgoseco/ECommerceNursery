@@ -30,13 +30,15 @@ namespace NurseryApp.Controllers
         }
 
         /// <summary>
-        /// Only returns a view if the user is a landscaper. Returns a view of all products (including bulk products)
+        /// Only returns a view if the user is a landscaper. Returns a view of all bulk products.
         /// </summary>
-        /// <returns>View of Landscaper Shop with all products</returns>
+        /// <returns>View of Landscaper Shop with all bulk products</returns>
         [Authorize(Policy = "Landscaper")]
         public async Task<IActionResult> LandscaperShop()
         {
-            return View(await _context.GetProducts());
+            IEnumerable<Product> bulkProducts = await _context.GetProducts();
+            IEnumerable<Product> results = bulkProducts.Where(p => p.Bulk == true);
+            return View(results);
         }
 
         /// <summary>
@@ -44,6 +46,7 @@ namespace NurseryApp.Controllers
         /// </summary>
         /// <param name="id">Primary Key value</param>
         /// <returns>Details view of the selected product</returns>
+        [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
             var product = await _context.GetProduct(id);

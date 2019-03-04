@@ -1,4 +1,8 @@
 ﻿@model NurseryApp.Models.ViewModel.LoginViewModel
+@using Microsoft.AspNetCore.Identity;
+@using NurseryApp.Models;
+
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     ViewData["Title"] = "Login";
     Layout = "_Layout";
@@ -17,3 +21,26 @@
 
     <button type="submit">LOGIN</button>
 </form>
+
+@{ 
+    var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+    if(loginProviders.Count > 0)
+    {
+        <form asp-action="ExternalLogin">
+            @foreach (var provider in loginProviders)
+            {
+            <button type="submit" name="provider" value="@provider.Name" title="Login user @provider.DisplayName">
+                @if (provider.Name == "Microsoft")
+                {
+                    <i class="fab fa-windows"></i>
+                }
+                @if (provider.Name == "Google")
+                {
+                    <i class="fab fa-google"></i>
+                }
+            </button>
+            }
+        </form>
+        
+    }
+}

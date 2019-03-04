@@ -1,0 +1,31 @@
+﻿@model NurseryApp.Models.Product
+
+@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    ViewData["Title"] = "Details";
+
+    Layout = "_Layout";
+}
+
+<div class="details">
+    <img class="product_img" src="@Html.DisplayFor(model => model.Img)" alt="@Html.DisplayFor(model => model.Name)" />
+    <div class="detail_text">
+        <h1 class="product_name">@Html.DisplayFor(model => model.Name)</h1>
+        <h2 class="product_description">@Html.DisplayFor(model => model.Description)</h2>
+        <h2 class="product_price">@Html.DisplayFor(model => model.Price)</h2>
+        <form asp-action="Add" asp-controller="BasketProduct" asp-route-id="id" asp-route-quantity="quantity">
+            <input type="hidden" name="id" id="id" value="@Html.DisplayFor(model => model.ID)" />
+
+            <label>Quantity</label>
+            <input name="quantity" id="quantity" type="number" />
+
+            <button type="submit" value="ADD TO BASKET">ADD TO BASKET</button>
+        </form>
+    </div>
+</div>
+@if (signInManager.IsSignedIn(User))
+{
+    @await Component.InvokeAsync("Basket")
+}

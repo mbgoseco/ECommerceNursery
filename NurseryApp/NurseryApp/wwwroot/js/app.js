@@ -1,4 +1,9 @@
-﻿$('.img1').on('click', function (event) {
+﻿$('.has-dropdown').on('click', function (event) {
+    console.log('also firing');
+    $('.has-dropdown').toggleClass('is-active');
+})
+
+$('.img1').on('click', function (event) {
     console.log('also firing');
     $('.img1-img').toggleClass('hidden');
     $('.img1-div').toggleClass('hidden');

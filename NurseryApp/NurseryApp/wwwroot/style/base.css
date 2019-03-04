@@ -7,7 +7,16 @@
 
 header{
     background-color: white;
-    padding:2vh 5vw 2vh 5vw;
+}
+
+.banner {
+    width: 100%;
+    margin: 0;
+}
+
+.navbar-dropdown {
+    width: 25vw;
+    margin-left: -15vw;
 }
 
 main {
@@ -30,7 +39,6 @@ nav{
 
 .master-nav-item{
     display: flex;
-    width: 22.5vw; /*header - padding / number of nav items*/
     justify-content: center;
     
 }
@@ -56,7 +64,7 @@ h4 {
     font-size: 2vw;
 }
 
-p, a{
+p, a, span {
     font-size: 1.6vw;
     text-align: center;
 }
@@ -134,12 +142,25 @@ img1-div, img4-div, img2-div, img3-div {
     margin: 2vw;
 }
 
+.details {
+    background-color: hsla(0, 59%, 100%, 0.79);
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.detail_text {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
 .product_img {
     width: 25vw;
     height: 25vh;
 }
 
-.product_name, .product_price {
+.product_name, .product_price, .product_description {
     font-family: Verdana;
     font-size: 1rem;
     margin: 1vw;
