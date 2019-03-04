@@ -1,1 +1,32 @@
-﻿<h3> Checkout </h3>
+﻿@model NurseryApp.Models.ViewModel.CheckoutViewModel;
+
+<h3> Checkout </h3>
+<form>
+    <p>Credit Card Information</p>
+    <label asp-for="@Model.Name"> </label>
+    <input asp-for="@Model.Name"/>
+
+    <label asp-for="@Model.CC"></label>
+    <input asp-for="@Model.CC" />
+
+    <label asp-for="@Model.CVV"></label>
+    <input asp-for="@Model.CVV" />
+
+    <label asp-for="@Model.ExpirationDate"></label>
+    <input asp-for="@Model.ExpirationDate" />
+
+    <p>Billing Address</p>
+    <label asp-for="@Model.Address"></label>
+    <input asp-for="@Model.Address" />
+
+    <label asp-for="@Model.City"></label>
+    <input asp-for="@Model.City" />
+
+    <label asp-for="@Model.State"></label>
+    <input asp-for="@Model.State" />
+
+    <label asp-for="@Model.ZipCode"></label>
+    <input asp-for="@Model.ZipCode" />
+
+    <button type="Submit">Place Order</button>
+</form>
