@@ -1,4 +1,4 @@
-﻿$('.has-dropdown').on('click', function (event) {
+﻿$('#basket-dropdown').on('click', function (event) {
     console.log('also firing');
     $('.has-dropdown').toggleClass('is-active');
 })
