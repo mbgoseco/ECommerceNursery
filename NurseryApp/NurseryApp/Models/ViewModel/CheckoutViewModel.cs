@@ -23,7 +23,7 @@ namespace NurseryApp.Models.ViewModel
         [Required]
         public int ZipCode { get; set; }
         [Required]
-        public int CC { get; set; }
+        public string CC { get; set; }
         [Required]
         public int CVV { get; set; }
         [Required]

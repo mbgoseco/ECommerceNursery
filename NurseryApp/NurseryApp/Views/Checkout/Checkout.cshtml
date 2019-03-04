@@ -10,12 +10,21 @@
     <span asp-validation-for="Name"></span>
 
     <label asp-for="CC"></label>
-    <input asp-for="CC" />
-    <span asp-validation-for="CC"></span>
+    <select asp-for="CC">
+        <option value="370000000000002">370000000000002</option>
+        <option value="6011000000000012">6011000000000012</option>
+        <option value="3088000000000017">3088000000000017</option>
+        <option value="4007000000027">	4007000000027</option>
+        <option value="5424000000000015">5424000000000015</option>
+        <option value="4012888818888">	4012888818888</option>
+        <option value="5424000000000015">5424000000000015</option>
+    </select>
+    <span asp-validation-for="CVV"></span>
 
     <label asp-for="CVV"></label>
     <input asp-for="CVV" />
-    <span asp-validation-for="CVV"></span>
+    <span asp-validation-for="CC"></span>
+
 
     <label asp-for="ExpirationDate"></label>
     <input asp-for="ExpirationDate" />
