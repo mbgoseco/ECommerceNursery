@@ -39,20 +39,30 @@ namespace NurseryApp.Controllers
                 var userRaw = await _userManager.FindByEmailAsync(userEmail);
                 string userID = userRaw.Id;
 
-            CheckoutViewModel checkout = new CheckoutViewModel()
+                Basket basket = await _basketcontext.GetBasketByUserId(userID);
+                List<BasketProductViewModel> basketProducts = await _basketProduct.GetBasket(basket.ID);
+
+                Checkout checkout = new Checkout();
+                checkout.UserID = userID;
+                await _context.CreateCheckoutAsync(checkout);
+                foreach (var bp in basketProducts)
+                {
+                    await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
+                    bp.BasketID = checkout.ID;
+                    checkout.Total += Convert.ToDecimal(bp.Quantity) * bp.Price;
+                }
+
+            CheckoutViewModel checkoutVM = new CheckoutViewModel()
             {
                 Name = User.Claims.First(name => name.Type == "FullName").Value,
                 Email = userEmail,
-                Address = userRaw.
-                City
-                State
-                Zipcode
-                CC
-                CVV
-                ExpirationDate
-                Total
-            }
-            return View();
+                Address = userRaw.Address,
+                City = userRaw.City,
+                State = userRaw.State,
+                ZipCode = userRaw.ZipCode,
+                Total = checkout.Total,
+            };
+            return View(checkoutVM);
         }
 
         /// <summary>
@@ -69,14 +79,8 @@ namespace NurseryApp.Controllers
             Basket basket = await _basketcontext.GetBasketByUserId(userID);
             List<BasketProductViewModel> basketProducts =  await _basketProduct.GetBasket(basket.ID);
 
-            Checkout checkout = new Checkout();
-            checkout.UserID = userID;
-            await _context.CreateCheckoutAsync(checkout);
-            foreach (var bp in basketProducts)
-            {
-                await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
-                bp.BasketID = checkout.ID;
-            }
+            Checkout checkout = await _context.GetCheckoutByUserId(userID);
+ 
 
             StringBuilder invoice = new StringBuilder();
 
