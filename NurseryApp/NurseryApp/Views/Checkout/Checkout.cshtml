@@ -1,0 +1,41 @@
+﻿@model NurseryApp.Models.ViewModel.CheckoutViewModel;
+
+<h3> Checkout </h3>
+<form asp-for="Checkout" method="post">
+    <p>Credit Card Information</p>
+    <label asp-for="Name"> </label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+
+    <label asp-for="CC"></label>
+    <input asp-for="CC" />
+    <span asp-validation-for="CC"></span>
+
+    <label asp-for="CVV"></label>
+    <input asp-for="CVV" />
+    <span asp-validation-for="CVV"></span>
+
+    <label asp-for="ExpirationDate"></label>
+    <input asp-for="ExpirationDate" />
+    <span asp-validation-for="ExpirationDate"></span>
+
+    <p>Billing Address</p>
+    <label asp-for="Address"></label>
+    <input asp-for="Address" />
+    <span asp-validation-for="Address"></span>
+
+    <label asp-for="City"></label>
+    <input asp-for="City" />
+    <span asp-validation-for="City"></span>
+
+    <label asp-for="State"></label>
+    <input asp-for="State" />
+    <span asp-validation-for="State"></span>
+
+    <label asp-for="ZipCode"></label>
+    <input asp-for="ZipCode" />
+    <span asp-validation-for="ZipCode"></span>
+
+    <p>Total=@Model.Total</p>
+    <button type="Submit">Place Order</button>
+</form>

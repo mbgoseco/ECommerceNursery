@@ -54,7 +54,7 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         <div class="navbar-item has-dropdown">
-                            <a class="navbar-link">
+                            <a id="basket-dropdown" class="navbar-link">
                                 Basket
                             </a>
 
@@ -70,38 +70,6 @@
                 </div>
             </div>
         </nav>
-
-        @*<nav>
-            <div class="master-nav-item home-nav">
-                <a href="/Home/Index">Home</a>
-            </div>
-            <div class="master-nav-item register-nav">
-                @if (signInManager.IsSignedIn(User))
-                {
-                    <a href="/Account/Logout">LogOut</a>
-                }
-                else
-                {
-                    <a href="/Account/Login">Login</a>
-                }
-            </div>
-            <div class="master-nav-item register-nav">
-                @if (signInManager.IsSignedIn(User))
-                {
-                    <a href="">Welcome @User.Claims.First(name => name.Type == "FullName").Value!</a>
-                    <div class=" login-drop hidden"> <a href="">Placeholder</a></div>
-                }
-                else
-                {
-                    <a href="/Account/Register">Register</a>
-                }
-            </div>
-            <div class="master-nav-item dropdown-nav product-nav"><a asp-action="Shop" asp-controller="Shop">Products</a></div>
-            <div class="master-nav-item dropdown-nav product-nav"><a asp-action="LandscaperShop" asp-controller="Shop">Landscaper Bulk Items</a></div>
-            <div class="master-nav-item dropdown-nav basket-nav">
-                <a href="/BasketProduct/Index">Basket</a>
-            </div>
-        </nav>*@
     </header>
     <main>
         <div>

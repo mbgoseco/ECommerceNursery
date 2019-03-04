@@ -32,6 +32,55 @@ namespace NurseryApp.Controllers
             _emailSender = emailSender;
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Checkout()
+        {
+                string userEmail = User.Identity.Name;
+                var userRaw = await _userManager.FindByEmailAsync(userEmail);
+                string userID = userRaw.Id;
+
+                Basket basket = await _basketcontext.GetBasketByUserId(userID);
+                List<BasketProductViewModel> basketProducts = await _basketProduct.GetBasket(basket.ID);
+
+                Checkout checkout = new Checkout();
+                checkout.UserID = userID;
+                await _context.CreateCheckoutAsync(checkout);
+                foreach (var bp in basketProducts)
+                {
+                    await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
+                    bp.BasketID = checkout.ID;
+                    checkout.Total += Convert.ToDecimal(bp.Quantity) * bp.Price;
+                }
+
+            CheckoutViewModel checkoutVM = new CheckoutViewModel()
+            {
+                Name = User.Claims.First(name => name.Type == "FullName").Value,
+                Email = userEmail,
+                Address = userRaw.Address,
+                City = userRaw.City,
+                State = userRaw.State,
+                ZipCode = userRaw.ZipCode,
+                Total = checkout.Total,
+            };
+            return View(checkoutVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckoutViewModel cvm)
+        {
+            string userEmail = User.Identity.Name;
+            var userRaw = await _userManager.FindByEmailAsync(userEmail);
+            userRaw.Address = cvm.Address;
+            userRaw.State = cvm.State;
+            userRaw.City = cvm.City;
+            userRaw.ZipCode = cvm.ZipCode;
+            await _userManager.UpdateAsync(userRaw);
+
+            //TO-DO: Incorportate Auth.Net Processesing
+
+            return RedirectToAction("Receipt");
+        }
+
         /// <summary>
         /// Creates a receipt of a user's basket contents, takes the user to a view displaying the receipt, and emails them an invoice.
         /// </summary>
@@ -46,14 +95,8 @@ namespace NurseryApp.Controllers
             Basket basket = await _basketcontext.GetBasketByUserId(userID);
             List<BasketProductViewModel> basketProducts =  await _basketProduct.GetBasket(basket.ID);
 
-            Checkout checkout = new Checkout();
-            checkout.UserID = userID;
-            await _context.CreateCheckoutAsync(checkout);
-            foreach (var bp in basketProducts)
-            {
-                await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
-                bp.BasketID = checkout.ID;
-            }
+            Checkout checkout = await _context.GetCheckoutByUserId(userID);
+ 
 
             StringBuilder invoice = new StringBuilder();
 
