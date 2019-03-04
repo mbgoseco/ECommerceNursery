@@ -66,8 +66,8 @@ namespace NurseryApp
             })
             .AddGoogle(o =>
             {
-                o.ClientId = Configuration["ClientId"];
-                o.ClientSecret = Configuration["ClientSecret"];
+                o.ClientId = Configuration["GoogleClientId"];
+                o.ClientSecret = Configuration["GoogleClientSecret"];
                 o.UserInformationEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo";
                 o.ClaimActions.Clear();
                 o.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
