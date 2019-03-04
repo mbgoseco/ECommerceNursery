@@ -33,6 +33,7 @@ namespace NurseryApp.Controllers
         }
 
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> Checkout()
         {
                 string userEmail = User.Identity.Name;
@@ -63,6 +64,21 @@ namespace NurseryApp.Controllers
                 Total = checkout.Total,
             };
             return View(checkoutVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Checkout(CheckoutViewModel cvm)
+        {
+            string userEmail = User.Identity.Name;
+            var userRaw = await _userManager.FindByEmailAsync(userEmail);
+            userRaw.Address = cvm.Address;
+            userRaw.State = cvm.State;
+            userRaw.City = cvm.City;
+            userRaw.ZipCode = cvm.ZipCode;
+            await _userManager.UpdateAsync(userRaw);
+
+            //TO-DO: Incorportate Auth.Net Processesing
+
+            return RedirectToAction("Receipt");
         }
 
         /// <summary>
