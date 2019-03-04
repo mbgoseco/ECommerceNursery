@@ -1,5 +1,4 @@
-﻿
-@using Microsoft.AspNetCore.Identity
+﻿@using Microsoft.AspNetCore.Identity
 @using NurseryApp.Models
 @inject SignInManager<ApplicationUser> signInManager
 <!DOCTYPE html>
@@ -9,15 +8,70 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="~/style/reset.css" rel="stylesheet" />
+    <link href="~/style/bulma.css" rel="stylesheet" />
     <link href="~/style/base.css" rel="stylesheet" />
     <title>@ViewBag.Title</title>
 </head>
 <body>
 
     <header>
-        <h1>BinaryTree Nursery</h1>
-        <h4>A Clever SubHeader</h4>
-        <nav>
+        <a asp-action="Index" asp-controller="Home">
+            <img class="banner" src="~/Assets/BTNbanner.png" alt="Binary Tree Nursery" />
+        </a>
+
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <div class="master-nav-item dropdown-nav product-nav">
+                        <a class="navbar-item" asp-action="Shop" asp-controller="Shop">Products</a>
+                    </div>
+                    <div class="master-nav-item dropdown-nav product-nav">
+                        <a class="navbar-item" asp-action="LandscaperShop" asp-controller="Shop">Landscaper Bulk Items</a>
+                    </div>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="master-nav-item register-nav">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <span class="navbar-item">Welcome @User.Claims.First(name => name.Type == "FullName").Value!</span>
+                        }
+                        else
+                        {
+                            <a class="navbar-item" href="/Account/Register">Register</a>
+                        }
+                    </div>
+                    <div class="master-nav-item register-nav">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <a class="navbar-item" href="/Account/Logout">LogOut</a>
+                        }
+                        else
+                        {
+                            <a class="navbar-item" href="/Account/Login">Login</a>
+                        }
+                    </div>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <div class="navbar-item has-dropdown">
+                            <a class="navbar-link">
+                                Basket
+                            </a>
+
+                            <div class="navbar-dropdown">
+                                <a class="navbar-item" href="/BasketProduct/Index">
+                                    Go to Basket
+                                </a>
+                                <hr class="navbar-divider">
+                                @await Component.InvokeAsync("Basket")
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </nav>
+
+        @*<nav>
             <div class="master-nav-item home-nav">
                 <a href="/Home/Index">Home</a>
             </div>
@@ -47,7 +101,7 @@
             <div class="master-nav-item dropdown-nav basket-nav">
                 <a href="/BasketProduct/Index">Basket</a>
             </div>
-        </nav>
+        </nav>*@
     </header>
     <main>
         <div>

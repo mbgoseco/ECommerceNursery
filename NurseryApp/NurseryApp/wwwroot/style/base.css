@@ -7,7 +7,16 @@
 
 header{
     background-color: white;
-    padding:2vh 5vw 2vh 5vw;
+}
+
+.banner {
+    width: 100%;
+    margin: 0;
+}
+
+.navbar-dropdown {
+    width: 25vw;
+    margin-left: -15vw;
 }
 
 main {
@@ -30,7 +39,6 @@ nav{
 
 .master-nav-item{
     display: flex;
-    width: 22.5vw; /*header - padding / number of nav items*/
     justify-content: center;
     
 }
@@ -56,7 +64,7 @@ h4 {
     font-size: 2vw;
 }
 
-p, a{
+p, a, span {
     font-size: 1.6vw;
     text-align: center;
 }
