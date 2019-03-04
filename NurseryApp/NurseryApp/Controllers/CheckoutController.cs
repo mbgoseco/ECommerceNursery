@@ -32,6 +32,29 @@ namespace NurseryApp.Controllers
             _emailSender = emailSender;
         }
 
+        [Authorize]
+        public async Task<IActionResult> Checkout()
+        {
+                string userEmail = User.Identity.Name;
+                var userRaw = await _userManager.FindByEmailAsync(userEmail);
+                string userID = userRaw.Id;
+
+            CheckoutViewModel checkout = new CheckoutViewModel()
+            {
+                Name = User.Claims.First(name => name.Type == "FullName").Value,
+                Email = userEmail,
+                Address = userRaw.
+                City
+                State
+                Zipcode
+                CC
+                CVV
+                ExpirationDate
+                Total
+            }
+            return View();
+        }
+
         /// <summary>
         /// Creates a receipt of a user's basket contents, takes the user to a view displaying the receipt, and emails them an invoice.
         /// </summary>

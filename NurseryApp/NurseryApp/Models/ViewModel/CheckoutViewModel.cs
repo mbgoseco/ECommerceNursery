@@ -9,8 +9,6 @@ namespace NurseryApp.Models.ViewModel
     public class CheckoutViewModel
     {
         [Required]
-        public string UserID { get; set; }
-        [Required]
         public string Name { get; set; }
         [Required]
         [EmailAddress]
