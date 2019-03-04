@@ -30,9 +30,14 @@ BinaryTree Nursery is a Ecommerce site that sells plants, such as Dwarf Apple Tr
 - Landscape
 	- Only landscapers are allowed to access to bulk quantity products.
 
-## Change Log
-v.0.1.0 - Sprint 1
-	Created Inventory Database and User Database. Created Home page, a Login Page, and Register page that capture necessary claims, and a shopping page that renders all products. Custom Claim based policy implamented. 
+## OAuth
+- Micrsoft OAuth
+- Google OAuth
 
+## Change Log
+v.0.1.0 - Sprint 1  
+	Created Inventory Database and User Database. Created Home page, a Login Page, and Register page that capture necessary claims, and a shopping page that renders all products. Custom Claim based policy implamented.   
+v 0.2.0 - Sprint 2  
+    Add OAuth using Microsoft and Google. Added the ability for users to add products to card. Created cart view. 
 ## Contributors
 Michael Goseco and Clarice Costello
