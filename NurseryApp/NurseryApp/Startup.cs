@@ -44,10 +44,10 @@ namespace NurseryApp
                 .AddDefaultTokenProviders();
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration["ConnectionStrings:IdentityDefaultConnection"]));
+            options.UseSqlServer(Configuration["ConnectionStrings:IdentityProductionConnection"]));
 
             services.AddDbContext<NurseryDbContext>(options =>
-                options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+                options.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
 
             services.AddAuthorization(options =>
             {
@@ -61,13 +61,13 @@ namespace NurseryApp
 
             services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
             {
-                microsoftOptions.ClientId = Configuration["Authentication:Microsoft:ApplicationId"];
-                microsoftOptions.ClientSecret = Configuration["Authentication:Microsoft:Password"];
+                microsoftOptions.ClientId = Configuration["MicrosoftApplicationId"];
+                microsoftOptions.ClientSecret = Configuration["MicrosoftPassword"];
             })
             .AddGoogle(o =>
             {
-                o.ClientId = Configuration["Authentication:Google:ClientId"];
-                o.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                o.ClientId = Configuration["GoogleClientId"];
+                o.ClientSecret = Configuration["GoogleClientSecret"];
                 o.UserInformationEndpoint = "https://www.googleapis.com/oauth2/v2/userinfo";
                 o.ClaimActions.Clear();
                 o.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");

@@ -9,19 +9,14 @@ namespace NurseryApp.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Returns home view
+        /// </summary>
+        /// <returns>Home View</returns>
         public IActionResult Index()
         {
             return View();
         }
 
-        /// <summary>
-        /// Action for policy testing
-        /// </summary>
-        /// <returns></returns>
-        [Authorize(Policy = "Landscaper")]
-        public IActionResult Test()
-        {
-            return View();
-        }
     }
 }
