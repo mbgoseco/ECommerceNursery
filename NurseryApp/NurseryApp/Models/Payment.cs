@@ -70,7 +70,7 @@ namespace NurseryApp.Models
             {
                 if (response.transactionResponse != null)
                 {
-                    Console.WriteLine("Success, Auth Code : " + response.transactionResponse.authCode);
+                    return "Payment Successful";
                 }
             }
             else

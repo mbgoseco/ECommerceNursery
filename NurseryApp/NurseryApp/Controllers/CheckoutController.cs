@@ -89,9 +89,16 @@ namespace NurseryApp.Controllers
             }
 
             //TO-DO: Incorportate Auth.Net Processesing
-            _payment.Run(cvm);
+            string response = _payment.Run(cvm);
+            if (response == "Payment Successful")
+            {
+                return Redirect($"Receipt/{cvm.ID}");
+            }
+            else
+            {
+                return View(cvm);
+            }
 
-            return Redirect($"Receipt/{cvm.ID}");
         }
 
         /// <summary>
