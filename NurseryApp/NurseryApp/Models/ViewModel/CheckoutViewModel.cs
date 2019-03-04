@@ -8,6 +8,7 @@ namespace NurseryApp.Models.ViewModel
 {
     public class CheckoutViewModel
     {
+        public int ID { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
