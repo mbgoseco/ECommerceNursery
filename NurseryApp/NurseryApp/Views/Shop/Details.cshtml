@@ -1,5 +1,8 @@
 ﻿@model NurseryApp.Models.Product
 
+@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@inject SignInManager<ApplicationUser> signInManager
 @{
     ViewData["Title"] = "Details";
 
@@ -13,7 +16,7 @@
         <h2 class="product_description">@Html.DisplayFor(model => model.Description)</h2>
         <h2 class="product_price">@Html.DisplayFor(model => model.Price)</h2>
         <form asp-action="Add" asp-controller="BasketProduct" asp-route-id="id" asp-route-quantity="quantity">
-            <input type="hidden" name="id" id="id" value="@Html.DisplayFor(model => model.ID)"/>
+            <input type="hidden" name="id" id="id" value="@Html.DisplayFor(model => model.ID)" />
 
             <label>Quantity</label>
             <input name="quantity" id="quantity" type="number" />
@@ -22,5 +25,7 @@
         </form>
     </div>
 </div>
-
-@await  Component.InvokeAsync("Basket")
+@if (signInManager.IsSignedIn(User))
+{
+    @await Component.InvokeAsync("Basket")
+}

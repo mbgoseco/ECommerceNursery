@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<NurseryApp.Models.Product>
 
+@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@inject SignInManager<ApplicationUser> signInManager
 @{
     ViewData["Title"] = "Shop";
 
@@ -18,4 +21,8 @@
         </div>
     }
 </div>
-@await Component.InvokeAsync("Basket")
+
+@if (signInManager.IsSignedIn(User))
+{
+    @await Component.InvokeAsync("Basket")
+}
