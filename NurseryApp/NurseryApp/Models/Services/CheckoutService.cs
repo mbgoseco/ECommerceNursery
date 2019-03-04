@@ -36,9 +36,9 @@ namespace NurseryApp.Models.Services
         /// </summary>
         /// <param name="userID">Primary Key value</param>
         /// <returns>Result of checkout query</returns>
-        public async Task<Checkout> GetCheckoutByUserId(string userID)
+        public async Task<Checkout> GetCheckoutByUserId(string userID, int id)
         {
-            return await _context.Checkouts.FirstOrDefaultAsync(c => c.UserID == userID);
+            return await _context.Checkouts.FirstOrDefaultAsync(c => c.UserID == userID && c.ID == id);
 
         }
 

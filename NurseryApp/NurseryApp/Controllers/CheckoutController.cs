@@ -51,10 +51,12 @@ namespace NurseryApp.Controllers
                     await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
                     bp.BasketID = checkout.ID;
                     checkout.Total += Convert.ToDecimal(bp.Quantity) * bp.Price;
+                    await _context.UpdateCheckoutAsync(checkout);
                 }
 
             CheckoutViewModel checkoutVM = new CheckoutViewModel()
             {
+                ID = checkout.ID,
                 Name = User.Claims.First(name => name.Type == "FullName").Value,
                 Email = userEmail,
                 Address = userRaw.Address,
@@ -76,9 +78,15 @@ namespace NurseryApp.Controllers
             userRaw.ZipCode = cvm.ZipCode;
             await _userManager.UpdateAsync(userRaw);
 
-            //TO-DO: Incorportate Auth.Net Processesing
+            Basket basket = await _basketcontext.GetBasketByUserId(userRaw.Id);
+            var basketProducts = await _basketProduct.GetBasket(basket.ID);
+            foreach (var product in basketProducts)
+            {
+                await _basketProduct.DeleteBasketProductByID(basket.ID, product.ProductID);
+            }
+                //TO-DO: Incorportate Auth.Net Processesing
 
-            return RedirectToAction("Receipt");
+            return Redirect($"Receipt/{cvm.ID}");
         }
 
         /// <summary>
@@ -86,16 +94,18 @@ namespace NurseryApp.Controllers
         /// </summary>
         /// <returns>Receipt view with ordered products</returns>
         [Authorize]
-        public async Task<IActionResult> Receipt()
+        public async Task<IActionResult> Receipt(int id)
         {
             string userEmail = User.Identity.Name;
             var userRaw = await _userManager.FindByEmailAsync(userEmail);
             string userID = userRaw.Id;
             
-            Basket basket = await _basketcontext.GetBasketByUserId(userID);
-            List<BasketProductViewModel> basketProducts =  await _basketProduct.GetBasket(basket.ID);
-
-            Checkout checkout = await _context.GetCheckoutByUserId(userID);
+            Checkout checkout = await _context.GetCheckoutByUserId(userID, id);
+            List<BasketProductViewModel> checkoutProducts = await _checkoutProduct.GetCheckout(checkout.ID);
+            foreach (var checkoutProduct in checkoutProducts)
+            {
+                checkoutProduct.Total = checkout.Total;
+            }
  
 
             StringBuilder invoice = new StringBuilder();
@@ -111,7 +121,7 @@ namespace NurseryApp.Controllers
                 "</tr>" +
                 "</thead>");
             invoice.AppendLine("<tbody>");
-            foreach (BasketProductViewModel item in basketProducts)
+            foreach (BasketProductViewModel item in checkoutProducts)
             {
                 invoice.AppendLine("<tr>");
                 invoice.AppendLine($"<td>{item.Name}</td><td>{item.Quantity}</td><td>${item.Price * item.Quantity}</td>");
@@ -120,11 +130,11 @@ namespace NurseryApp.Controllers
             invoice.AppendLine("</tbody>");
             invoice.AppendLine("</table>");
             invoice.AppendLine("<hr>");
-            invoice.AppendLine($"<h2>Total: ${basketProducts[0].Total}</h2>");
+            invoice.AppendLine($"<h2>Total: ${checkoutProducts[0].Total}</h2>");
 
             await _emailSender.SendEmailAsync(userEmail, "Order Confirmed", invoice.ToString());
 
-            return View(basketProducts);
+            return View(checkoutProducts);
         }
     }
 }
