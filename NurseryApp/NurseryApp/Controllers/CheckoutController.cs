@@ -20,9 +20,10 @@ namespace NurseryApp.Controllers
         private readonly IBasketProduct _basketProduct;
         private readonly ICheckoutProduct _checkoutProduct;
         private readonly IEmailSender _emailSender;
+        private readonly Payment _payment;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CheckoutController(UserManager<ApplicationUser> userManager, ICheckout context, IBasketProduct basketProduct, IBasket basketcontext, ICheckoutProduct checkoutProduct, IEmailSender emailSender)
+        public CheckoutController(UserManager<ApplicationUser> userManager, ICheckout context, IBasketProduct basketProduct, IBasket basketcontext, ICheckoutProduct checkoutProduct, IEmailSender emailSender, Payment payment)
         {
             _context = context;
             _userManager = userManager;
@@ -30,6 +31,7 @@ namespace NurseryApp.Controllers
             _basketProduct = basketProduct;
             _checkoutProduct = checkoutProduct;
             _emailSender = emailSender;
+            _payment = payment;
         }
 
         [Authorize]
@@ -67,6 +69,7 @@ namespace NurseryApp.Controllers
             };
             return View(checkoutVM);
         }
+
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutViewModel cvm)
         {
@@ -84,7 +87,9 @@ namespace NurseryApp.Controllers
             {
                 await _basketProduct.DeleteBasketProductByID(basket.ID, product.ProductID);
             }
-                //TO-DO: Incorportate Auth.Net Processesing
+
+            //TO-DO: Incorportate Auth.Net Processesing
+            _payment.Run(cvm);
 
             return Redirect($"Receipt/{cvm.ID}");
         }
