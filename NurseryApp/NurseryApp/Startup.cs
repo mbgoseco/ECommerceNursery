@@ -61,8 +61,8 @@ namespace NurseryApp
 
             services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
             {
-                microsoftOptions.ClientId = Configuration["ApplicationId"];
-                microsoftOptions.ClientSecret = Configuration["Password"];
+                microsoftOptions.ClientId = Configuration["MicrosoftApplicationId"];
+                microsoftOptions.ClientSecret = Configuration["MicrosoftPassword"];
             })
             .AddGoogle(o =>
             {
