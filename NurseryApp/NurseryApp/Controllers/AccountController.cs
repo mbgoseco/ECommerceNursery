@@ -74,8 +74,17 @@ namespace NurseryApp.Controllers
                     Claim idClaim = new Claim("id", $"{user.Id}");
 
                     List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim, idClaim };
-
+                
                     await _UserManager.AddClaimsAsync(user, claims);
+
+                    if(user.Email.ToUpper() == "95COSTELLO@GMAIL.COM")
+                    {
+                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                    }
+                    if (user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper())
+                    {
+                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                    }
 
                     await _SignInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
@@ -213,6 +222,14 @@ namespace NurseryApp.Controllers
                     List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim, idClaim };
 
                     await _UserManager.AddClaimsAsync(user, claims);
+                    if (user.Email.ToUpper() == "95COSTELLO@GMAIL.COM")
+                    {
+                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                    }
+                    if (user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper())
+                    {
+                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                    }
 
 
                     if (result.Succeeded)
