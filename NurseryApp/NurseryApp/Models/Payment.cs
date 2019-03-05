@@ -15,7 +15,6 @@ namespace NurseryApp.Models
     public class Payment
     {
         private IConfiguration _configuration;
-        private readonly UserManager<ApplicationUser> _userManager;
 
         public Payment(IConfiguration configuration)
         {
@@ -53,6 +52,7 @@ namespace NurseryApp.Models
             {
                 transactionType = transactionTypeEnum.authCaptureTransaction.ToString(),
                 amount = cvm.Total,
+                payment = paymentType,
                 billTo = billingAddress
             };
 

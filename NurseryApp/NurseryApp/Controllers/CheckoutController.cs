@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using NurseryApp.Models;
 using NurseryApp.Models.Interfaces;
 using NurseryApp.Models.ViewModel;
@@ -20,10 +21,10 @@ namespace NurseryApp.Controllers
         private readonly IBasketProduct _basketProduct;
         private readonly ICheckoutProduct _checkoutProduct;
         private readonly IEmailSender _emailSender;
-        private readonly Payment _payment;
+        private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public CheckoutController(UserManager<ApplicationUser> userManager, ICheckout context, IBasketProduct basketProduct, IBasket basketcontext, ICheckoutProduct checkoutProduct, IEmailSender emailSender, Payment payment)
+        public CheckoutController(UserManager<ApplicationUser> userManager, ICheckout context, IBasketProduct basketProduct, IBasket basketcontext, ICheckoutProduct checkoutProduct, IEmailSender emailSender, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
@@ -31,7 +32,7 @@ namespace NurseryApp.Controllers
             _basketProduct = basketProduct;
             _checkoutProduct = checkoutProduct;
             _emailSender = emailSender;
-            _payment = payment;
+            _configuration = configuration;
         }
 
         [Authorize]
@@ -81,17 +82,17 @@ namespace NurseryApp.Controllers
             userRaw.ZipCode = cvm.ZipCode;
             await _userManager.UpdateAsync(userRaw);
 
-            Basket basket = await _basketcontext.GetBasketByUserId(userRaw.Id);
-            var basketProducts = await _basketProduct.GetBasket(basket.ID);
-            foreach (var product in basketProducts)
-            {
-                await _basketProduct.DeleteBasketProductByID(basket.ID, product.ProductID);
-            }
-
             //TO-DO: Incorportate Auth.Net Processesing
-            string response = _payment.Run(cvm);
+            Payment payment = new Payment(_configuration);
+            string response = payment.Run(cvm);
             if (response == "Payment Successful")
             {
+                Basket basket = await _basketcontext.GetBasketByUserId(userRaw.Id);
+                var basketProducts = await _basketProduct.GetBasket(basket.ID);
+                foreach (var product in basketProducts)
+                {
+                    await _basketProduct.DeleteBasketProductByID(basket.ID, product.ProductID);
+                }
                 return Redirect($"Receipt/{cvm.ID}");
             }
             else
