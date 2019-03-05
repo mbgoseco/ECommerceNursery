@@ -20,7 +20,7 @@ namespace NurseryApp.Pages.ProductManagment
         [FromRoute]
         public int? ID { get; set; }
         public Product Product { get; set; }
-        public async void OnGet()
+        public async Task OnGet()
         {
             Product = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();              
         }
