@@ -85,6 +85,12 @@ namespace NurseryApp.Controllers
 
 
                     await _SignInManager.SignInAsync(user, isPersistent: false);
+
+                    if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                    {
+                        return RedirectToPage("Index", "Admin");
+                    };
+
                     return RedirectToAction("Index", "Home");
                 }
             }
