@@ -77,14 +77,12 @@ namespace NurseryApp.Controllers
                 
                     await _UserManager.AddClaimsAsync(user, claims);
 
-                    if(user.Email.ToUpper() == "95COSTELLO@GMAIL.COM")
+                    if(user.Email.ToUpper() == "95COSTELLO@GMAIL.COM" || user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper() || user.Email.ToUpper() == "AMANDA@CODEFELLOWS.COM")
                     {
                         await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
                     }
-                    if (user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper())
-                    {
-                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
-                    }
+
+
 
                     await _SignInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
@@ -222,11 +220,7 @@ namespace NurseryApp.Controllers
                     List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim, idClaim };
 
                     await _UserManager.AddClaimsAsync(user, claims);
-                    if (user.Email.ToUpper() == "95COSTELLO@GMAIL.COM")
-                    {
-                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
-                    }
-                    if (user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper())
+                    if (user.Email.ToUpper() == "95COSTELLO@GMAIL.COM" || user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper() || user.Email.ToUpper() == "AMANDA@CODEFELLOWS.COM")
                     {
                         await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
                     }

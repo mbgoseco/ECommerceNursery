@@ -52,6 +52,7 @@ namespace NurseryApp
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Landscaper", policy => policy.Requirements.Add(new LandscaperRequirement()));
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole(ApplicationRoles.Admin));
             });
 
 
