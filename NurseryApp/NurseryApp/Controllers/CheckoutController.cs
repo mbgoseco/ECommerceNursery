@@ -117,6 +117,7 @@ namespace NurseryApp.Controllers
             List<BasketProductViewModel> checkoutProducts = await _checkoutProduct.GetCheckout(checkout.ID);
             foreach (var checkoutProduct in checkoutProducts)
             {
+                checkoutProduct.ProductTotal = checkoutProduct.Price * checkoutProduct.Quantity;
                 checkoutProduct.Total = checkout.Total;
             }
  

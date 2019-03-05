@@ -76,7 +76,7 @@ namespace NurseryApp.Models
             else
             {
                 Console.WriteLine("Error: " + response.messages.message[0].code + "  " + response.messages.message[0].text);
-                if (response.transactionResponse != null)
+                if (response.transactionResponse.errors != null)
                 {
                     Console.WriteLine("Transaction Error : " + response.transactionResponse.errors[0].errorCode + " " + response.transactionResponse.errors[0].errorText);
                 }
