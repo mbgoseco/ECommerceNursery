@@ -1,0 +1,13 @@
+﻿@page "{id?}"
+@model NurseryApp.Pages.ProductManagment.ManageModel
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Manage</h1>
+<form method="post">
+    <label asp-for="@Model.Product.Name">Name</label>
+    <input asp-for="@Model.Product.Name" />
+</form>
+
