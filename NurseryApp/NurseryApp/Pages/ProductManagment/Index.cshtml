@@ -17,10 +17,7 @@
              <th>Plant Type</th>
             <th>Quantity</th>
             <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+
          </tr>   
     </thead>
     <tbody>
@@ -31,10 +28,10 @@
                 <td>@product.Description</td>
                 <td>@product.Type</td>
                 <td>@product.Quantity</td>
-                <td><a asp-page="/Manage" asp-route-id="@product.ID"></a></td>
-            </tr>            
+                <td><a asp-page="/Manage" asp-route-id="@product.ID">Manage</a></td>
+            </tr>
         }
-        
+
 
     </tbody>
 </table>
