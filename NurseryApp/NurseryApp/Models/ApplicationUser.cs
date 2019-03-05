@@ -17,4 +17,9 @@ namespace NurseryApp.Models
         public string State { get; set; }
         public int ZipCode { get; set; }
     }
+
+    public class ApplicationRoles
+    {
+        public const string Admin = "Admin";
+    }
 }
