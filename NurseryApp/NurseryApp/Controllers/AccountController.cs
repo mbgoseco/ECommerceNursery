@@ -85,6 +85,12 @@ namespace NurseryApp.Controllers
 
 
                     await _SignInManager.SignInAsync(user, isPersistent: false);
+
+                    if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                    {
+                        return RedirectToPage("Index", "Admin");
+                    };
+
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -112,10 +118,15 @@ namespace NurseryApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    var user = await _UserManager.FindByEmailAsync(lvm.Email); 
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("<h1>Welcome to Binary Tree Nursery<h1>");
                     sb.AppendLine("<h2>We're glad you're here<h2>");
                     await _emailSender.SendEmailAsync(lvm.Email, "Thanks for Signing In!", sb.ToString());
+                    if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                    {
+                        return RedirectToPage("Index", "Admin");
+                    };
                     return RedirectToAction("Index", "Home");
                 }
             }
