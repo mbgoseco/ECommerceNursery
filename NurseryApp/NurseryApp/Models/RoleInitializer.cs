@@ -8,6 +8,10 @@ namespace NurseryApp.Models
 {
     public class RoleInitializer
     {
+        private static readonly List<IdentityRole> Roles = new List<IdentityRole>()
+        {
+            new IdentityRole{Name = ApplicationRoles.Admin, NormalizedName = ApplicationRoles.Admin.ToUpper(), ConcurrencyStamp = Guid.NewGuid().ToString() }
+        }
 
     }
 }
