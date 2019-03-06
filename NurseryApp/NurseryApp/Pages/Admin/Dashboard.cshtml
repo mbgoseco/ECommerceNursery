@@ -1,6 +1,23 @@
 ﻿@page
+@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
 @model NurseryApp.Pages.Admin.DashboardModel
+@inject SignInManager<ApplicationUser> signInManager
+
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h1>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</</h1>
+
+<h2>Last 10 Orders</h2>
+<table>
+    <thead>
+        <tr>
+            <td>
+                stuff
+            </td>
+        </tr>
+    </thead>
+</table>

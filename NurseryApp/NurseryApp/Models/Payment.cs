@@ -36,7 +36,7 @@ namespace NurseryApp.Models
             var creditCard = new creditCardType
             {
                 cardNumber = cvm.CC,
-                expirationDate = cvm.ExpirationDateMonth + cvm.ExpirationDateMonth
+                expirationDate = cvm.ExpirationDateMonth + cvm.ExpirationDateYear
             };
 
             paymentType paymentType = new paymentType { Item = creditCard };
