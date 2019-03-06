@@ -52,5 +52,14 @@ namespace NurseryApp.Models.Services
             _context.Checkouts.Update(checkout);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<Checkout>> GetLastFiveCheckouts(string userID)
+        {
+            var checkouts = await _context.Checkouts.ToListAsync();
+            var userCheckouts = checkouts.Where(c => c.UserID == userID);
+            var topFive = userCheckouts.OrderByDescending(c => c.UserID == userID).Take(5).ToList();
+            return topFive;
+
+        }
     }
 }
