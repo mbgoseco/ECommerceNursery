@@ -25,8 +25,8 @@ namespace NurseryApp.Pages.User.Orders
         public async Task OnGet()
         {
             string userEmail = User.Identity.Name;
-            var user = await _userManager.FindByEmailAsync(userEmail);            
-            Checkouts = _context.
+            var user = await _userManager.FindByEmailAsync(userEmail);
+            Checkouts = await _context.GetLastFiveCheckouts(user.Id);
         }
     }
 }
