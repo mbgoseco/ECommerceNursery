@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NurseryApp.Models;
@@ -9,6 +10,7 @@ using NurseryApp.Models.Interfaces;
 
 namespace NurseryApp.Pages.ProductManagment
 {
+    [Authorize(Policy = "AdminOnly")]
     public class ManageModel : PageModel
     {
         private readonly IInventory _context;
@@ -20,12 +22,13 @@ namespace NurseryApp.Pages.ProductManagment
         [FromRoute]
         public int? ID { get; set; }
         public Product Product { get; set; }
+
         public async Task OnGet()
         {
             Product = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();              
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(Product Product)
         {
             var product = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();
             product.Name = Product.Name;
@@ -45,7 +48,7 @@ namespace NurseryApp.Pages.ProductManagment
                 await _context.CreateProduct(product);
             }
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("Index");
         }
 
         public async Task<IActionResult> OnPostDelete()

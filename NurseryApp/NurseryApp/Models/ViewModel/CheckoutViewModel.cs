@@ -26,9 +26,11 @@ namespace NurseryApp.Models.ViewModel
         public string CC { get; set; }
         [Required]
         public int CVV { get; set; }
+
         [Required]
-        [RegularExpression("^[0 - 9]{2}/[0-9]{2}$")]
-        public string ExpirationDate { get; set; }
+        public string ExpirationDateMonth { get; set; }
+        [Required]
+        public string ExpirationDateYear { get; set; }
         [Required]
         public decimal Total { get; set; }
 

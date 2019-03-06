@@ -58,8 +58,17 @@ namespace NurseryApp.Controllers
             var userRaw = await _userManager.FindByEmailAsync(userEmail);
             string userID = userRaw.Id;
             var basket = await _basket.GetBasketByUserId(userID);
+            var item = await _basketProduct.GetBasketProductByID(basket.ID, id);
+            if (item != null)
+            {
+                item.Quantity++;
+                await _basketProduct.UpdateQuantity(item);
+            }
+            else
+            {
+                await _basketProduct.AddBasketProduct(id, quantity, basket.ID);
 
-            await _basketProduct.AddBasketProduct(id, quantity, basket.ID);
+            }
 
             return RedirectToAction("Index", "BasketProduct");
         }
