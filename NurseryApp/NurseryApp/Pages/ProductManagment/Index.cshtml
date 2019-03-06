@@ -1,13 +1,9 @@
 ﻿@page
-@using NurseryApp.Models.Interfaces
+@model NurseryApp.Pages.ProductManagment.IndexModel
 
-@inject IInventory InventoryManager
 @{ 
     ViewData["Title"] = "ProductManagement";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@{ 
-    var products = await InventoryManager.GetAllProducts();
 }
 <h1>ProductManagement</h1>
 <table>
@@ -22,7 +18,7 @@
          </tr>   
     </thead>
     <tbody>
-        @foreach (var product in products)
+        @foreach (var product in @Model.Products)
         {
             <tr>
                 <td>@product.Name</td>
