@@ -48,7 +48,7 @@ namespace NurseryApp.Pages.ProductManagment
                 await _context.CreateProduct(product);
             }
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("Index");
         }
 
         public async Task<IActionResult> OnPostDelete()
