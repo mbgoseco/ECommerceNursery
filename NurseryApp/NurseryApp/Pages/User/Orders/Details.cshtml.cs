@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NurseryApp.Models;
 using NurseryApp.Models.Interfaces;
+using NurseryApp.Models.ViewModel;
 
 namespace NurseryApp.Pages.User.Orders
 {
@@ -14,20 +15,24 @@ namespace NurseryApp.Pages.User.Orders
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICheckout _context;
+        private readonly ICheckoutProduct _checkoutProduce;
 
-        public DetailsModel(UserManager<ApplicationUser> userManager, ICheckout context)
+        public DetailsModel(UserManager<ApplicationUser> userManager, ICheckout context, ICheckoutProduct checkoutProduct)
         {
             _userManager = userManager;
             _context = context;
+            _checkoutProduce = checkoutProduct;
         }
         [FromRoute]
         public int ID { get; set; }
-        public Checkout Checkout { get; set; }
+        public List<BasketProductViewModel> Checkout { get; set; }
         public async Task OnGet()
         {
             string userEmail = User.Identity.Name;
             var user = await _userManager.FindByEmailAsync(userEmail);
-            Checkout = await _context.GetCheckoutByUserId(user.Id, ID);
+            Checkout checkout = await _context.GetCheckoutByUserId(user.Id, ID);
+            Checkout = await _checkoutProduce.GetCheckout(ID);
+
         }
     }
 }
