@@ -14,5 +14,7 @@ namespace NurseryApp.Models.Interfaces
         Task<Checkout> GetCheckoutByUserId(string userID, int id);
 
         Task<List<Checkout>> GetLastFiveCheckouts(string userID);
+
+        Task<List<Checkout>> GetLastTenCheckouts();
     }
 }

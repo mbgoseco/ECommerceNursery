@@ -39,33 +39,36 @@ namespace NurseryApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Checkout()
         {
-                string userEmail = User.Identity.Name;
-                var userRaw = await _userManager.FindByEmailAsync(userEmail);
-                string userID = userRaw.Id;
+            string userEmail = User.Identity.Name;
+            var userRaw = await _userManager.FindByEmailAsync(userEmail);
+            string userID = userRaw.Id;
 
-                Basket basket = await _basketcontext.GetBasketByUserId(userID);
-                List<BasketProductViewModel> basketProducts = await _basketProduct.GetBasket(basket.ID);
+            Basket basket = await _basketcontext.GetBasketByUserId(userID);
+            List<BasketProductViewModel> basketProducts = await _basketProduct.GetBasket(basket.ID);
 
-                Checkout checkout = new Checkout();
-                checkout.UserID = userID;
-                await _context.CreateCheckoutAsync(checkout);
-                foreach (var bp in basketProducts)
-                {
-                    await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
-                    bp.BasketID = checkout.ID;
-                    checkout.Total += Convert.ToDecimal(bp.Quantity) * bp.Price;
-                    await _context.UpdateCheckoutAsync(checkout);
-                }
+            Checkout checkout = new Checkout();
+            checkout.UserID = userID;
+            checkout.Name = User.Claims.First(name => name.Type == "FullName").Value;
+            checkout.OrderDate = DateTime.Now;
+            await _context.CreateCheckoutAsync(checkout);
+            foreach (var bp in basketProducts)
+            {
+                await _checkoutProduct.AddCheckoutProduct(bp.ProductID, bp.Quantity, checkout.ID);
+                bp.BasketID = checkout.ID;
+                checkout.Total += Convert.ToDecimal(bp.Quantity) * bp.Price;
+                await _context.UpdateCheckoutAsync(checkout);
+            }
 
             CheckoutViewModel checkoutVM = new CheckoutViewModel()
             {
                 ID = checkout.ID,
-                Name = User.Claims.First(name => name.Type == "FullName").Value,
+                Name = checkout.Name,
                 Email = userEmail,
                 Address = userRaw.Address,
                 City = userRaw.City,
                 State = userRaw.State,
                 ZipCode = userRaw.ZipCode,
+                OrderDate = checkout.OrderDate,
                 Total = checkout.Total,
             };
             return View(checkoutVM);
@@ -82,7 +85,6 @@ namespace NurseryApp.Controllers
             userRaw.ZipCode = cvm.ZipCode;
             await _userManager.UpdateAsync(userRaw);
 
-            //TO-DO: Incorportate Auth.Net Processesing
             Payment payment = new Payment(_configuration);
             string response = payment.Run(cvm);
             if (response == "Payment Successful")

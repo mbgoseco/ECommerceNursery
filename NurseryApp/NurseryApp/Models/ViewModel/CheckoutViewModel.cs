@@ -32,6 +32,8 @@ namespace NurseryApp.Models.ViewModel
         [Required]
         public string ExpirationDateYear { get; set; }
         [Required]
+        public DateTime OrderDate { get; set; }
+        [Required]
         public decimal Total { get; set; }
 
     }

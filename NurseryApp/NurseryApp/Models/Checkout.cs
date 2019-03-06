@@ -9,6 +9,8 @@ namespace NurseryApp.Models
     {
         public int ID { get; set; }
         public string UserID { get; set; }
+        public string Name { get; set; }
+        public DateTime OrderDate { get; set; }
         public decimal Total { get; set; }
 
         public IEnumerable<CheckoutProduct> CheckoutProducts { get; set; }
