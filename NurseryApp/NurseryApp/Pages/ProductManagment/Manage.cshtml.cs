@@ -19,23 +19,23 @@ namespace NurseryApp.Pages.ProductManagment
 
         [FromRoute]
         public int? ID { get; set; }
-        public Product Productt { get; set; }
+        public Product Product { get; set; }
 
         public async Task OnGet()
         {
-            Productt = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();              
+            Product = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();              
         }
 
-        public async Task<IActionResult> OnPost()
+        public async Task<IActionResult> OnPost(Product Product)
         {
             var product = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();
-            product.Name = Productt.Name;
-            product.Description = Productt.Description;
-            product.Type = Productt.Type;
-            product.Quantity = Productt.Quantity;
-            product.Sku = Productt.Sku;
-            product.Bulk = Productt.Bulk;
-            product.Img = Productt.Img;
+            product.Name = Product.Name;
+            product.Description = Product.Description;
+            product.Type = Product.Type;
+            product.Quantity = Product.Quantity;
+            product.Sku = Product.Sku;
+            product.Bulk = Product.Bulk;
+            product.Img = Product.Img;
 
             if (ID != null)
             {
