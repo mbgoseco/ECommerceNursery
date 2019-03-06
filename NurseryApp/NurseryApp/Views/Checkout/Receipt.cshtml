@@ -1,14 +1,17 @@
 ﻿@model IEnumerable<NurseryApp.Models.ViewModel.BasketProductViewModel>
-
+@{ 
+    Layout = "_Layout";
+}
+<h3>Receipt</h3>
+<p> Thanks for Ordering! </p>
 @foreach (var item in @Model)
 {
-    <div>
-        name: @item.Name
-        Descriptin: @item.Description
-        Individual Price: @item.Price
-        Quantity: @item.Quantity
-        Total Price: @item.ProductTotal
-
-    </div>
+<div>
+    <p>Name: @item.Name
+    <p>Descriptin: @item.Description</p>
+    <p>Individual Price: @item.Price</p>
+    <p>Quantity: @item.Quantity</p>
+    <p>Total Price: @item.ProductTotal</p>
+</div>
 }
 TOTAL: @Model.ToArray()[0].Total
