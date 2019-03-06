@@ -1,4 +1,4 @@
-﻿@page "{id?}"
+﻿@page "{id}"
 @model NurseryApp.Pages.ProductManagment.ManageModel
 @{
     ViewData["Title"] = "Manage";
@@ -7,7 +7,23 @@
 
 <h1>Manage</h1>
 <form method="post">
-    <label asp-for="@Model.Product.Name">Name</label>
-    <input asp-for="@Model.Product.Name" />
+    <input type="hidden" asp-for="Productt.ID" value="@Model.Productt.ID"/>
+    <label asp-for="Productt.Name">Name</label>
+    <input asp-for="Productt.Name" value="@Model.Productt.Name" />
+    <label asp-for="Productt.Description">Description</label>
+    <input asp-for="Productt.Description" value="@Model.Productt.Description"/>
+    <label asp-for="Productt.Sku">Sku</label>
+    <input asp-for="Productt.Sku" value="@Model.Productt.Sku"/>
+    <label asp-for="Productt.Type">Type</label>
+    <input asp-for="Productt.Type" value="@Model.Productt.Type"/>
+    <label asp-for="Productt.Img">Image</label>
+    <input asp-for="Productt.Img" value="@Model.Productt.Img"/>
+    <label asp-for="Productt.Quantity">Quantity</label>
+    <input asp-for="Productt.Quantity" value="@Model.Productt.Quantity"/>
+    <label asp-for="Productt.Price">Price</label>
+    <input asp-for="Productt.Price" value="@Model.Productt.Price"/>
+    <label asp-for="Productt.Bulk">Bulk</label>
+    <input asp-for="Productt.Bulk" value="@Model.Productt.Bulk"/>
+    <button type="submit"> Submit!</button>
 </form>
 
