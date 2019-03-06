@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NurseryApp.Models;
@@ -9,6 +10,7 @@ using NurseryApp.Models.Interfaces;
 
 namespace NurseryApp.Pages.ProductManagment
 {
+    [Authorize(Policy = "AdminOnly")]
     public class ManageModel : PageModel
     {
         private readonly IInventory _context;
