@@ -1,0 +1,32 @@
+﻿@page
+@model NurseryApp.Pages.User.Orders.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th> Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in @Model.Checkouts)
+    {
+        <tr>
+            <td>
+                @item.ID
+            </td>
+            <td>
+                @item.Total
+            </td>
+            <td>
+                <a asp-page="Details" asp-route-id="item.ID">Details</a>
+            </td>
+        </tr>
+    }
+</table>
