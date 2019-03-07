@@ -57,7 +57,7 @@ namespace NurseryApp.Models.Services
         {
             var checkouts = await _context.Checkouts.ToListAsync();
             var userCheckouts = checkouts.Where(c => c.UserID == userID);
-            var topFive = userCheckouts.OrderByDescending(c => c.UserID == userID).Take(5).ToList();
+            var topFive = userCheckouts.Reverse().Take(5).ToList();
             return topFive;
 
         }

@@ -1,0 +1,58 @@
+﻿@page "{id}"
+@model NurseryApp.Pages.User.Orders.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Sku
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Product Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in @Model.Checkout)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <th>
+                    @item.Sku
+                </th>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td> @item.ProductTotal</td>
+            </tr>
+        }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td>Total</td>
+                <td>@Model.Checkout.ToArray()[0].Total</td>
+            </tr>
+    </tbody>foreach
+</table>
