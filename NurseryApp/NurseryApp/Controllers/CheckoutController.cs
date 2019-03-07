@@ -47,7 +47,7 @@ namespace NurseryApp.Controllers
             List<BasketProductViewModel> basketProducts = await _basketProduct.GetBasket(basket.ID);
 
             Checkout checkout = new Checkout();
-            checkout.UserID = userID;
+            checkout.UserID = userEmail;
             checkout.Name = User.Claims.First(name => name.Type == "FullName").Value;
             checkout.OrderDate = DateTime.Now;
             await _context.CreateCheckoutAsync(checkout);
@@ -77,6 +77,12 @@ namespace NurseryApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutViewModel cvm)
         {
+            Checkout checkout = await _context.GetCheckoutByUserId(cvm.Email, cvm.ID);
+            checkout.Address = cvm.Address;
+            checkout.City = cvm.City;
+            checkout.State = cvm.State;
+            checkout.ZipCode = cvm.ZipCode;
+
             string userEmail = User.Identity.Name;
             var userRaw = await _userManager.FindByEmailAsync(userEmail);
             userRaw.Address = cvm.Address;
@@ -115,7 +121,7 @@ namespace NurseryApp.Controllers
             var userRaw = await _userManager.FindByEmailAsync(userEmail);
             string userID = userRaw.Id;
             
-            Checkout checkout = await _context.GetCheckoutByUserId(userID, id);
+            Checkout checkout = await _context.GetCheckoutByUserId(userEmail, id);
             List<BasketProductViewModel> checkoutProducts = await _checkoutProduct.GetCheckout(checkout.ID);
             foreach (var checkoutProduct in checkoutProducts)
             {

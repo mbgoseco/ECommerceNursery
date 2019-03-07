@@ -24,6 +24,8 @@
             <th>
                 Total Cost
             </th>
+            <th>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -38,6 +40,9 @@
                 </td>
                 <td>
                     @order.Total
+                </td>
+                <td>
+                    <a asp-page="/Admin/Details" asp-route-ID="@order.ID" asp-route-UserID="@order.UserID">Details</a>
                 </td>
             </tr>
         }
