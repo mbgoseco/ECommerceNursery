@@ -88,7 +88,7 @@ namespace NurseryApp.Controllers
 
                     if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
                     {
-                        return RedirectToPage("/Dashboard", "Admin");
+                        return RedirectToPage("/Admin/Dashboard");
                     };
 
                     return RedirectToAction("Index", "Home");
@@ -126,7 +126,7 @@ namespace NurseryApp.Controllers
 
                     if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
                     {
-                        return RedirectToPage("/Dashboard", "Admin");
+                        return RedirectToPage("/Admin/Dashboard");
                     };
                     return RedirectToAction("Index", "Home");
                 }
@@ -186,6 +186,12 @@ namespace NurseryApp.Controllers
                 sb.AppendLine("<h2>We're glad you're here<h2>");
                 string userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
                 await _emailSender.SendEmailAsync(userEmail, "Thanks for Signing In!", sb.ToString());
+
+                var user = await _UserManager.FindByEmailAsync(userEmail);
+                if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                {
+                    return RedirectToPage("/Admin/Dashboard");
+                };
                 return RedirectToAction("Index", "Home");
             }
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
@@ -243,7 +249,7 @@ namespace NurseryApp.Controllers
                         await _SignInManager.SignInAsync(user, isPersistent: false);
                         if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
                         {
-                            return RedirectToPage("/Dashboard", "Admin");
+                            return RedirectToPage("/Admin/Dashboard");
                         };
                         return RedirectToAction("Index", "Home");
                     }

@@ -1,0 +1,80 @@
+﻿@page "{ID}/{UserID}"
+@using NurseryApp.Models
+@using NurseryApp.Models.ViewModel
+@using NurseryApp.Models.Interfaces
+@model NurseryApp.Pages.Admin.DetailsModel
+@inject ICheckoutProduct checkoutProduct
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var lineItems = await checkoutProduct.GetCheckout(Model.Order.ID);
+
+}
+
+<table>
+    <tbody>
+        <tr>
+            <th>
+                Order ID#
+            </th>
+            <td>
+                @Model.Order.ID
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Order Date
+            </th>
+            <td>
+                @Model.Order.OrderDate.ToString()
+            </td>
+        </tr>
+        <tr>
+            <th>
+                User ID / Email
+            </th>
+            <td>
+                @Model.Order.UserID
+            </td>
+        </tr>
+        <tr>
+            <th>
+                User's Name
+            </th>
+            <td>
+                @Model.Order.Name
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Billing Address
+            </th>
+            <td>
+                <p>@Model.Order.Address</p>
+                <p>@Model.Order.City, @Model.Order.State, @Model.Order.ZipCode</p>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Items
+            </th>
+            <td>
+                @foreach (BasketProductViewModel item in lineItems)
+                {
+                    <p>@item.Name - Quantity: @item.Quantity</p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Total
+            </th>
+            <td>
+                $@Model.Order.Total
+            </td>
+        </tr>
+    </tbody>
+</table>

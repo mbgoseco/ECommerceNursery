@@ -15,9 +15,36 @@
 <table>
     <thead>
         <tr>
-            <td>
-                stuff
-            </td>
+            <th>
+                User Name
+            </th>
+            <th>
+                Order Date
+            </th>
+            <th>
+                Total Cost
+            </th>
+            <th>
+            </th>
         </tr>
     </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>
+                    @order.Name
+                </td>
+                <td>
+                    @order.OrderDate.ToString()
+                </td>
+                <td>
+                    @order.Total
+                </td>
+                <td>
+                    <a asp-page="/Admin/Details" asp-route-ID="@order.ID" asp-route-UserID="@order.UserID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
