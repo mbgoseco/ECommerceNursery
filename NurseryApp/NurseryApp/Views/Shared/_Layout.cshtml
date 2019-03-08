@@ -44,7 +44,7 @@
                     <div class="master-nav-item register-nav">
                         @if (signInManager.IsSignedIn(User))
                         {
-                            <a class="navbar-item" href="/Account/Logout">LogOut</a>
+                            <a class="navbar-item" href="/Account/Logout">Logout</a>
                         }
                         else
                         {
@@ -53,6 +53,8 @@
                     </div>
                     @if (signInManager.IsSignedIn(User))
                     {
+                        <a class="navbar-item" asp-page="/User/Profile/Profile">Profile</a>
+
                         <div class="navbar-item has-dropdown">
                             <a id="basket-dropdown" class="navbar-link">
                                 Basket
