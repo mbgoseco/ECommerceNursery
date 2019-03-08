@@ -60,9 +60,6 @@ namespace NurseryApp.Pages.User.Profile
             Claim fullNameClaim = new Claim("FullName", $"{NewFirstName} {user.LastName}");
             await _userManager.ReplaceClaimAsync(user, oldFullNameClaim, fullNameClaim);
 
-            IList<Claim> claimCollection = await _userManager.GetClaimsAsync(user);
-            List<Claim> claims = claimCollection.ToList();
-
             user.FirstName = NewFirstName;
             await _userManager.UpdateAsync(user);
 

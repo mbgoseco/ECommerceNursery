@@ -45,4 +45,14 @@ $('#name-cancel').on('click', function (event) {
     $('#name-cancel').toggleClass('hidden');
 })
 
+$('#change-pw').on('click', function (event) {
+    event.preventDefault();
+    $('.pw').toggleClass('hidden');
+    if ($('#change-pw').text() == 'CHANGE PASSWORD') {
+        $('#change-pw').text('CANCEL');
+    } else if ($('#change-pw').text() == 'CANCEL') {
+        $('#change-pw').text('CHANGE PASSWORD');
+    }
+})
+
 console.log("We're running!");
