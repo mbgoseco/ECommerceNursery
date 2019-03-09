@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NurseryApp.Models;
@@ -10,6 +11,7 @@ using NurseryApp.Models.ViewModel;
 
 namespace NurseryApp.Pages.Admin
 {
+    [Authorize(Policy = "AdminOnly")]
     public class DetailsModel : PageModel
     {
         private readonly ICheckout _checkout;

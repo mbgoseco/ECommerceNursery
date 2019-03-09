@@ -29,8 +29,7 @@ namespace NurseryApp.Pages.User.Orders
         public async Task OnGet()
         {
             string userEmail = User.Identity.Name;
-            var user = await _userManager.FindByEmailAsync(userEmail);
-            Checkout checkout = await _context.GetCheckoutByUserId(user.Id, ID);
+            Checkout checkout = await _context.GetCheckoutByUserId(userEmail, ID);
             Checkout = await _checkoutProduce.GetCheckout(ID);
             foreach (var item in Checkout)
             {

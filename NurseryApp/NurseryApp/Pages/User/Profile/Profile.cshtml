@@ -1,0 +1,34 @@
+﻿@page
+@model NurseryApp.Pages.User.Profile.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Profile for @Model.FullName</h1>
+
+<div class="profile">
+    <form method="post">
+        <h3>
+            <label asp-for="@Model.FirstName">First Name: </label>
+            <span id="first-name">@Model.FirstName</span>
+            <input id="first-name-input" class="hidden" asp-for="@Model.NewFirstName" placeholder="@Model.FirstName">
+            <button id="submit-name" class="hidden" type="submit" asp-page-handler="NameChange">SAVE</button>
+            <button id="name-change">CHANGE</button>
+            <button id="name-cancel" class="hidden">CANCEL</button>
+        </h3>
+    </form>
+    <h3>Last Name: @Model.LastName</h3>
+    <h3>Email: @Model.Email</h3>
+    <h3><a asp-page="/User/Orders/Index">View Orders</a></h3>
+    <form method="post">
+        <button id="change-pw">CHANGE PASSWORD</button>
+        <label class="pw hidden" asp-for="@Model.OldPassword">Old Password: </label>
+        <input class="pw hidden" asp-for="@Model.OldPassword" />
+        <label class="pw hidden" asp-for="@Model.NewPassword">New Password: </label>
+        <input class="pw hidden" asp-for="@Model.NewPassword" />
+        <label class="pw hidden" asp-for="@Model.ConfirmPassword">Confirm Password: </label>
+        <input class="pw hidden" asp-for="@Model.ConfirmPassword" />
+        <button class="pw hidden" type="submit" asp-page-handler="PasswordChange">CONFIRM</button>
+    </form>
+</div>
