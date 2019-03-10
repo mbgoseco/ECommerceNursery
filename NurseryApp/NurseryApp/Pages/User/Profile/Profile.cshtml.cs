@@ -17,6 +17,10 @@ namespace NurseryApp.Pages.User.Profile
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the Profile page
+        /// </summary>
+        /// <param name="userManager">UserManager service from Identity Framework</param>
         public ProfileModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
@@ -44,6 +48,10 @@ namespace NurseryApp.Pages.User.Profile
         [Compare("NewPassword", ErrorMessage = "The passwords do not match.")]
         public string ConfirmPassword { get; set; }
 
+        /// <summary>
+        /// Provides the Profile page with current user's profile data
+        /// </summary>
+        /// <returns>ApplicationUser object of current user</returns>
         public async Task OnGet()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -53,6 +61,10 @@ namespace NurseryApp.Pages.User.Profile
             Email = user.UserName;
         }
 
+        /// <summary>
+        /// Updates the current user's first name in the user database and claims list
+        /// </summary>
+        /// <returns>Redirect to user profile page</returns>
         public async Task<IActionResult> OnPostNameChange()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -66,6 +78,10 @@ namespace NurseryApp.Pages.User.Profile
             return RedirectToPage("/User/Profile/Profile");
         }
 
+        /// <summary>
+        /// Updates the current user's password in the user database
+        /// </summary>
+        /// <returns>Redirect to user profile page</returns>
         public async Task<IActionResult> OnPostPasswordChange()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);

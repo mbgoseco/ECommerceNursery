@@ -14,6 +14,11 @@ namespace NurseryApp.Pages.ProductManagment
     public class ManageModel : PageModel
     {
         private readonly IInventory _context;
+
+        /// <summary>
+        /// Constructor method that brings in services to be used by the Manage page
+        /// </summary>
+        /// <param name="checkout">Checkout interface</param>
         public ManageModel(IInventory context)
         {
             _context = context;
@@ -23,11 +28,20 @@ namespace NurseryApp.Pages.ProductManagment
         public int? ID { get; set; }
         public Product Product { get; set; }
 
+        /// <summary>
+        /// Provides the Manage page with a product matching the ID from the route or an instance of a new product to create
+        /// </summary>
+        /// <returns>Selected or new product object</returns>
         public async Task OnGet()
         {
             Product = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();              
         }
 
+        /// <summary>
+        /// Updates data for existing product, or adds a new product to the Product table if the ID does not exist
+        /// </summary>
+        /// <param name="Product">Product object</param>
+        /// <returns>Redirect to Index page</returns>
         public async Task<IActionResult> OnPost(Product Product)
         {
             var product = await _context.GetProductByID(ID.GetValueOrDefault()) ?? new Product();
@@ -51,6 +65,10 @@ namespace NurseryApp.Pages.ProductManagment
             return RedirectToPage("Index");
         }
 
+        /// <summary>
+        /// Deletes a selected product matching the ID value
+        /// </summary>
+        /// <returns>Redirect to Index page</returns>
         public async Task<IActionResult> OnPostDelete()
         {
             await _context.DeleteProductByID(ID.Value);

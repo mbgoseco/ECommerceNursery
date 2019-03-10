@@ -13,6 +13,10 @@ namespace NurseryApp.Controllers
     {
         private readonly IShop _context;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the ShopController
+        /// </summary>
+        /// <param name="context">Shop interface</param>
         public ShopController(IShop context)
         {
             _context = context;

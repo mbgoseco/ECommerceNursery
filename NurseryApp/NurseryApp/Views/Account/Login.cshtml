@@ -7,22 +7,25 @@
     ViewData["Title"] = "Login";
     Layout = "_Layout";
 }
-
-<form method="post">
-    <div asp-validation-summary="All"></div>
-
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-    <span asp-validation-for="Email"></span>
-
-    <label asp-for="Password"></label>
-    <input asp-for="Password" />
-    <span asp-validation-for="Password"></span>
-
-    <button type="submit">LOGIN</button>
-</form>
-
+<div class="data-form login">
+    <form method="post">
+        <div asp-validation-summary="All"></div>
+        <p>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" />
+            <span asp-validation-for="Email"></span>
+        </p>
+        <p>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" />
+            <span asp-validation-for="Password"></span>
+        </p>
+        <button type="submit">LOGIN</button>
+    </form>
+</div>
+<div class="ext-login-buttons">
 @{ 
+    <p>Login with Microsoft or Google</p>
     var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     if(loginProviders.Count > 0)
     {
@@ -44,3 +47,4 @@
         
     }
 }
+</div>

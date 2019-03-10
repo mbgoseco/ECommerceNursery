@@ -10,9 +10,9 @@
 }
 
 <h1>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</</h1>
-
-<h2>Last 10 Orders</h2>
-<table>
+<h3><a asp-page="/ProductManagment/Index">Product Management</a></h3>
+<h3>Last 10 Orders</h3>
+<table class="order-table">
     <thead>
         <tr>
             <th>

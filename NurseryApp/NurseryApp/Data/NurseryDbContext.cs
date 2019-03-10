@@ -29,7 +29,7 @@ namespace NurseryApp.Data
                     Price = 1.00m,
                     Img = "https://images.pexels.com/photos/1002703/pexels-photo-1002703.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                     Bulk = false
-
+                    // ~/Assets/ProductPictures/.png
                 },
                 new Product
                 {

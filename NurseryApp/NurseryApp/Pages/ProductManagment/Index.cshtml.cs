@@ -14,11 +14,22 @@ namespace NurseryApp.Pages.ProductManagment
     public class IndexModel : PageModel
     {
         private readonly IInventory _context;
+
+        /// <summary>
+        /// Constructor method that brings in services to be used by the ProductManagement's Index page
+        /// </summary>
+        /// <param name="context">Inventory interface</param>
         public IndexModel(IInventory context)
         {
             _context = context;
         }
+
         public List<Product> Products { get; set; }
+
+        /// <summary>
+        /// Provides the Index page with a list of all Products in the store's inventory
+        /// </summary>
+        /// <returns>List of Products</returns>
         public async Task OnGet()
         {
             Products = await _context.GetAllProducts();

@@ -13,6 +13,11 @@ namespace NurseryApp.Models.Services
     {
         private readonly NurseryDbContext _context;
 
+        /// <summary>
+        /// Constructor method that connects the service to the app's databases through its matching context.
+        /// </summary>
+        /// <param name="userManager">UserManager service from Identity Framework</param>
+        /// <param name="context">DbContext connection to the NurseryDb</param>
         public CheckoutService(NurseryDbContext context)
         {
             _context = context;
@@ -51,6 +56,11 @@ namespace NurseryApp.Models.Services
             await _context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets the 5 most recent orders of the current user from the checkout table and returns them as a list.
+        /// </summary>
+        /// <param name="userID">Username which is their email</param>
+        /// <returns>List of user's 5 most recent orders</returns>
         public async Task<List<Checkout>> GetLastFiveCheckouts(string userID)
         {
             var checkouts = await _context.Checkouts.ToListAsync();
@@ -60,6 +70,10 @@ namespace NurseryApp.Models.Services
 
         }
 
+        /// <summary>
+        /// Gets the 10 most recent orders of all users from the checkout table and returns them as a list.
+        /// </summary>
+        /// <returns>List of 10 most recent orders of all users</returns>
         public async Task<List<Checkout>> GetLastTenCheckouts()
         {
             var checkouts = await _context.Checkouts.ToListAsync();
