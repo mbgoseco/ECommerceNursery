@@ -17,6 +17,11 @@ namespace NurseryApp.Pages.Admin
         private readonly ICheckout _checkout;
         private readonly ICheckoutProduct _checkoutProduct;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the Details page
+        /// </summary>
+        /// <param name="checkout">Checkout interface</param>
+        /// <param name="checkoutProduct">CheckoutProduct interface</param>
         public DetailsModel(ICheckout checkout, ICheckoutProduct checkoutProduct)
         {
             _checkout = checkout;
@@ -29,6 +34,10 @@ namespace NurseryApp.Pages.Admin
         public int ID { get; set; }
         public Checkout Order { get; set; }
 
+        /// <summary>
+        /// Provides the Details page with details of a selected order
+        /// </summary>
+        /// <returns>Selected checkout object</returns>
         public async Task OnGetAsync()
         {
             Order = await _checkout.GetCheckoutByUserId(UserID, ID);

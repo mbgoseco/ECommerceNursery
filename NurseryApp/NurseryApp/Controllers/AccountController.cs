@@ -22,6 +22,14 @@ namespace NurseryApp.Controllers
         private IBasket _basket;
         private IEmailSender _emailSender;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the AccountController
+        /// </summary>
+        /// <param name="userManager">UserManager service from Identity Framework</param>
+        /// <param name="signInManager">SignInManager service from Identity Framework</param>
+        /// <param name="context">Configuration strings from user secrets</param>
+        /// <param name="basket">Basket interface</param>
+        /// <param name="emailsender">Emailsender interface</param>
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration context, IBasket basket, IEmailSender emailsender)
         {
             _UserManager = userManager;
@@ -39,7 +47,7 @@ namespace NurseryApp.Controllers
         public IActionResult Register() => View();
 
         /// <summary>
-        /// Take the data from the registration page form, create a new user object, add it to the user DB, and return to the home page.
+        /// Take the data from the registration page form, create a new user object, assign the new user claims and roles, add it to the user DB, and return to the home page.
         /// </summary>
         /// <param name="rvm">Register View Model data from form</param>
         /// <returns>New user object and redirect to home page</returns>

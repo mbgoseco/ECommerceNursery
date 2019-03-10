@@ -15,14 +15,22 @@ namespace NurseryApp.Pages.Admin
     {
         private readonly ICheckout _checkout;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the Dashboard page
+        /// </summary>
+        /// <param name="checkout">Checkout interface</param>
         public DashboardModel(ICheckout checkout)
         {
             _checkout = checkout;
         }
-
+        
         [FromRoute]
         public List<Checkout> Orders { get; set; }
 
+        /// <summary>
+        /// Provides the Dashboard page with a list of the last 10 Orders from all users
+        /// </summary>
+        /// <returns>List of orders</returns>
         public async Task OnGet()
         {
             Orders = await _checkout.GetLastTenCheckouts();
