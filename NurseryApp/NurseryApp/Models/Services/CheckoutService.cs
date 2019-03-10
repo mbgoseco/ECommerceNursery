@@ -12,12 +12,10 @@ namespace NurseryApp.Models.Services
     public class CheckoutService : ICheckout
     {
         private readonly NurseryDbContext _context;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CheckoutService(UserManager<ApplicationUser> userManager, NurseryDbContext context)
+        public CheckoutService(NurseryDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         /// <summary>
