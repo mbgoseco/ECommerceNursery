@@ -59,5 +59,104 @@ namespace NurseryTests
 
             }
         }
+
+        //Product
+        [Fact]
+        public async void CanCreateProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("test").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                var expected = await context.Products.FirstOrDefaultAsync(p => p.ID == product.ID);
+                Assert.Equal(expected, product);
+            }
+        }
+
+        [Fact]
+        public async void CanGetProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("test").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                var expected = await inventoryService.GetProductByID(product.ID);
+                Assert.Equal(expected, product);
+            }
+        }
+
+        [Fact]
+        public async void CanGetAllProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("check2").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                var expected = await inventoryService.GetAllProducts();
+                Assert.Equal(new List<Product> { product }, expected);
+            }
+        }
+
+        [Fact]
+        public async void CanUpdateProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("check3").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                Product product = new Product();
+                product.Name = "flower";
+                await inventoryService.CreateProduct(product);
+                product.Name = "sunflower";
+                await inventoryService.Update(product);
+                var expected = await inventoryService.GetProductByID(1);
+                Assert.Equal("sunflower", expected.Name);
+            }
+
+        }
+
+        [Fact]
+        public async void CanDeleteProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("check3").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await inventoryService.DeleteProductByID(product.ID);
+                var expected = await inventoryService.GetProductByID(product.ID);
+                Assert.Null(expected);
+            }
+
+        }
+
+        [Fact]
+        public async void CanCreateBasketProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("test").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                BasketProductService basketProductService = new BasketProductService(context);
+                BasketService basketService = new BasketService(context);
+                Basket basket = new Basket();
+                await basketService.CreateBasketAsync(basket);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                var expected = await context.BasketProducts.FirstOrDefaultAsync(p => p.BasketID == basket.ID && p.ProductID == product.ID);
+                Assert.NotNull(expected);
+            }
+        }
+
+
+        }
+
     }
 }
