@@ -16,11 +16,20 @@ namespace NurseryApp.Models
     {
         private IConfiguration _configuration;
 
+        /// <summary>
+        /// Constructor method that brings in configuration strings to be used by the Payment class
+        /// </summary>
+        /// <param name="configuration">Configuration strings from user secrets</param>
         public Payment(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Creates a transaction instance built from the checkout input from the form. Sends the transaction to the third party AuthNet service for authorization. Returns a response based on the validation of the checkout data.
+        /// </summary>
+        /// <param name="cvm">Checkout View Model created from form</param>
+        /// <returns>Validation response from AuthNet</returns>
         [Authorize]
         public string Run(CheckoutViewModel cvm)
         {

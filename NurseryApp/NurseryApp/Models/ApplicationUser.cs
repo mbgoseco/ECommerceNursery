@@ -18,6 +18,9 @@ namespace NurseryApp.Models
         public int ZipCode { get; set; }
     }
 
+    /// <summary>
+    /// Contains the different roles that can be assigned to users
+    /// </summary>
     public class ApplicationRoles
     {
         public const string Admin = "Admin";
