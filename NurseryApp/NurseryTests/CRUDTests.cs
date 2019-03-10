@@ -115,7 +115,7 @@ namespace NurseryTests
                 await inventoryService.CreateProduct(product);
                 product.Name = "sunflower";
                 await inventoryService.Update(product);
-                var expected = await inventoryService.GetProductByID(1);
+                var expected = await inventoryService.GetProductByID(product.ID);
                 Assert.Equal("sunflower", expected.Name);
             }
 
@@ -215,6 +215,137 @@ namespace NurseryTests
                 var basketProduct = await basketProductService.GetBasketProductByID(basket.ID, product.ID);
                 await basketProductService.DeleteBasketProductByID(basket.ID, product.ID);
                 var actual = await basketProductService.GetBasketProductByID(basket.ID, product.ID);
+                Assert.Null(actual);
+            }
+        }
+
+        [Fact]
+        public async void CanCreateCheckout()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("test").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                Checkout checkout = new Checkout();
+                CheckoutService checkoutService = new CheckoutService(context);
+                await checkoutService.CreateCheckoutAsync(checkout);
+                var expected = await context.Checkouts.FirstOrDefaultAsync(b => b.ID == checkout.ID);
+                Assert.Equal(expected, checkout);
+
+            }
+        }
+
+        [Fact]
+        public async void CanGetCheckout()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("test").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                Checkout checkout = new Checkout();
+                checkout.UserID = "userString";
+                CheckoutService checkoutService = new CheckoutService(context);
+                await checkoutService.CreateCheckoutAsync(checkout);
+                var expected = await checkoutService.GetCheckoutByUserId(checkout.UserID, checkout.ID);
+                Assert.Equal(expected, checkout);
+
+            }
+        }
+
+        [Fact]
+        public async void CanUpdateCheckout()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("test").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                Checkout checkout = new Checkout();
+                checkout.UserID = "userString";
+                CheckoutService checkoutService = new CheckoutService(context);
+                await checkoutService.CreateCheckoutAsync(checkout);
+                checkout.UserID = "new string";
+                await checkoutService.UpdateCheckoutAsync(checkout);
+                Assert.Equal("new string", checkout.UserID);
+
+            }
+        }
+
+        //Checkout Product
+        [Fact]
+        public async void CanCreateCheckoutProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("test").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                CheckoutProductService checkoutProductService = new CheckoutProductService(context);
+                CheckoutService checkoutService = new CheckoutService(context);
+                Checkout checkout = new Checkout();
+                await checkoutService.CreateCheckoutAsync(checkout);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await checkoutProductService.AddCheckoutProduct(product.ID, 3, checkout.ID);
+                var expected = await context.CheckoutProducts.FirstOrDefaultAsync(p => p.CheckoutID == checkout.ID && p.ProductID == product.ID);
+                Assert.NotNull(expected);
+            }
+        }
+
+        [Fact]
+        public async void CanGetCheckoutProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("GetBasektProduct").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                CheckoutProductService checkoutProductService = new CheckoutProductService(context);
+                CheckoutService checkoutService = new CheckoutService(context);
+                Checkout checkout = new Checkout();
+                await checkoutService.CreateCheckoutAsync(checkout);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await checkoutProductService.AddCheckoutProduct(product.ID, 3, checkout.ID);
+                var actual = await checkoutProductService.GetCheckoutProductByID(checkout.ID, product.ID);
+                var expected = await context.CheckoutProducts.FirstOrDefaultAsync(p => p.CheckoutID == checkout.ID && p.ProductID == product.ID);
+                Assert.Equal(expected, actual);
+            }
+        }
+
+        [Fact]
+        public async void CanUpdateCheckoutProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("GetBasektProduct").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                CheckoutProductService checkoutProductService = new CheckoutProductService(context);
+                CheckoutService checkoutService = new CheckoutService(context);
+                Checkout checkout = new Checkout();
+                await checkoutService.CreateCheckoutAsync(checkout);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await checkoutProductService.AddCheckoutProduct(product.ID, 3, checkout.ID);
+                var checkoutProduct = await checkoutProductService.GetCheckoutProductByID(checkout.ID, product.ID);
+                checkoutProduct.Quantity = 5;
+                await checkoutProductService.UpdateQuantity(checkoutProduct);
+                var actual = await checkoutProductService.GetCheckoutProductByID(checkout.ID, product.ID);
+                Assert.Equal(5, actual.Quantity);
+            }
+        }
+
+        [Fact]
+        public async void CanDeleteCheckoutProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("GetBasektProduct").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                CheckoutProductService checkoutProductService = new CheckoutProductService(context);
+                CheckoutService checkoutService = new CheckoutService(context);
+                Checkout checkout = new Checkout();
+                await checkoutService.CreateCheckoutAsync(checkout);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await checkoutProductService.AddCheckoutProduct(product.ID, 3, checkout.ID);
+                var checkoutProduct = await checkoutProductService.GetCheckoutProductByID(checkout.ID, product.ID);
+                await checkoutProductService.DeleteCheckoutProductByID(checkout.ID, product.ID);
+                var actual = await checkoutProductService.GetCheckoutProductByID(checkout.ID, product.ID);
                 Assert.Null(actual);
             }
         }

@@ -13,7 +13,7 @@ namespace NurseryApp.Models.Interfaces
 
         Task<List<BasketProductViewModel>> GetCheckout(int checkoutID);
 
-        Task<BasketProduct> GetCheckoutProductByID(int checkoutID, int productID);
+        Task<CheckoutProduct> GetCheckoutProductByID(int checkoutID, int productID);
 
         Task UpdateQuantity(CheckoutProduct checkoutProduct);
 
