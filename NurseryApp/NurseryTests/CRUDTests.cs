@@ -150,12 +150,73 @@ namespace NurseryTests
                 await basketService.CreateBasketAsync(basket);
                 Product product = new Product();
                 await inventoryService.CreateProduct(product);
+                await basketProductService.AddBasketProduct(product.ID, 3, basket.ID);
                 var expected = await context.BasketProducts.FirstOrDefaultAsync(p => p.BasketID == basket.ID && p.ProductID == product.ID);
                 Assert.NotNull(expected);
             }
         }
 
+        [Fact]
+        public async void CanGetBasketProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("GetBasektProduct").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                BasketProductService basketProductService = new BasketProductService(context);
+                BasketService basketService = new BasketService(context);
+                Basket basket = new Basket();
+                await basketService.CreateBasketAsync(basket);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await basketProductService.AddBasketProduct(product.ID, 3, basket.ID);
+                var actual = await basketProductService.GetBasketProductByID(basket.ID, product.ID);
+                var expected = await context.BasketProducts.FirstOrDefaultAsync(p => p.BasketID == basket.ID && p.ProductID == product.ID);
+                Assert.Equal(expected, actual);
+            }
+        }
 
+        [Fact]
+        public async void CanUpdateBasketProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("GetBasektProduct").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                BasketProductService basketProductService = new BasketProductService(context);
+                BasketService basketService = new BasketService(context);
+                Basket basket = new Basket();
+                await basketService.CreateBasketAsync(basket);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await basketProductService.AddBasketProduct(product.ID, 3, basket.ID);
+                var basketProduct = await basketProductService.GetBasketProductByID(basket.ID, product.ID);
+                basketProduct.Quantity = 5;
+                await basketProductService.UpdateQuantity(basketProduct);
+                var actual = await basketProductService.GetBasketProductByID(basket.ID, product.ID);
+                Assert.Equal(5, actual.Quantity);
+            }
+        }
+
+        [Fact]
+        public async void CanDeleteBasketProduct()
+        {
+            DbContextOptions<NurseryDbContext> options = new DbContextOptionsBuilder<NurseryDbContext>().UseInMemoryDatabase("GetBasektProduct").Options;
+            using (NurseryDbContext context = new NurseryDbContext(options))
+            {
+                InventoryService inventoryService = new InventoryService(context);
+                BasketProductService basketProductService = new BasketProductService(context);
+                BasketService basketService = new BasketService(context);
+                Basket basket = new Basket();
+                await basketService.CreateBasketAsync(basket);
+                Product product = new Product();
+                await inventoryService.CreateProduct(product);
+                await basketProductService.AddBasketProduct(product.ID, 3, basket.ID);
+                var basketProduct = await basketProductService.GetBasketProductByID(basket.ID, product.ID);
+                await basketProductService.DeleteBasketProductByID(basket.ID, product.ID);
+                var actual = await basketProductService.GetBasketProductByID(basket.ID, product.ID);
+                Assert.Null(actual);
+            }
         }
 
     }
