@@ -1,17 +1,79 @@
 ﻿@model IEnumerable<NurseryApp.Models.ViewModel.BasketProductViewModel>
-@{ 
+@using NurseryApp.Models
+@using NurseryApp.Models.Interfaces
+@inject ICheckout checkoutService
+
+@{
+    ViewData["Title"] = "Receipt";
     Layout = "_Layout";
 }
+
+@{
+    string userEmail = User.Identity.Name;
+    int checkoutID = Model.First().BasketID;
+    Checkout checkout = await checkoutService.GetCheckoutByUserId(userEmail, checkoutID);
+}
+
 <h3>Receipt</h3>
 <p> Thanks for Ordering! </p>
-@foreach (var item in @Model)
-{
+
 <div>
-    <p>Name: @item.Name
-    <p>Descriptin: @item.Description</p>
-    <p>Individual Price: @item.Price</p>
-    <p>Quantity: @item.Quantity</p>
-    <p>Total Price: @item.ProductTotal</p>
+    <table class="order-table">
+        <thead>
+            <tr>
+                <th>
+                    Sku
+                </th>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Product Total
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @Model)
+            {
+                <tr>
+                    <td>
+                        @item.Sku
+                    </td>
+                    <th>
+                        @item.Name
+                    </th>
+                    <td>
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @item.Price
+                    </td>
+                    <td> @item.ProductTotal</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td>Total</td>
+                <td>@Model.ToList().ToArray()[0].Total</td>
+            </tr>
+            <tr>
+                <th>
+                    Billing Address
+                </th>
+                <td>
+                    <p>@checkout.Address</p>
+                    <p>@checkout.City, @checkout.State, @checkout.ZipCode</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-}
-TOTAL: @Model.ToArray()[0].Total
