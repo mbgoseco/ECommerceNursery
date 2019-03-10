@@ -115,7 +115,7 @@ namespace NurseryTests
                 await inventoryService.CreateProduct(product);
                 product.Name = "sunflower";
                 await inventoryService.Update(product);
-                var expected = await inventoryService.GetProductByID(1);
+                var expected = await inventoryService.GetProductByID(product.ID);
                 Assert.Equal("sunflower", expected.Name);
             }
 
