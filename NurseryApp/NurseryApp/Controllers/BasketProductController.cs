@@ -19,7 +19,12 @@ namespace NurseryApp.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
 
-
+        /// <summary>
+        /// Constructor method that brings in services to be used by the BasketProductController
+        /// </summary>
+        /// <param name="basketProduct">BasketProduct interface</param>
+        /// <param name="basket">Basket interface</param>
+        /// <param name="userManager">UserManager service</param>
         public BasketProductController(IBasketProduct basketProduct, IBasket basket, UserManager<ApplicationUser> userManager)
         {
             _basketProduct = basketProduct;

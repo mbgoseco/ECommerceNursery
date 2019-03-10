@@ -24,6 +24,16 @@ namespace NurseryApp.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the CheckoutController
+        /// </summary>
+        /// <param name="userManager">UserManager service</param>
+        /// <param name="context">Checkout interface</param>
+        /// <param name="basketProduct">BasketProduct interface</param>
+        /// <param name="basketcontext">Basket interface</param>
+        /// <param name="checkoutProduct">CheckoutProduct interface</param>
+        /// <param name="emailSender">EmailSender interface</param>
+        /// <param name="configuration">Configuration strings from user secrets</param>
         public CheckoutController(UserManager<ApplicationUser> userManager, ICheckout context, IBasketProduct basketProduct, IBasket basketcontext, ICheckoutProduct checkoutProduct, IEmailSender emailSender, IConfiguration configuration)
         {
             _context = context;
@@ -35,6 +45,10 @@ namespace NurseryApp.Controllers
             _configuration = configuration;
         }
 
+        /// <summary>
+        /// Creates a checkout instance of the user's current basket items and takes them to the checkout view to fill out the form to complete the checkout process.
+        /// </summary>
+        /// <returns>View of checkout page</returns>
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Checkout()
@@ -74,6 +88,11 @@ namespace NurseryApp.Controllers
             return View(checkoutVM);
         }
 
+        /// <summary>
+        /// Takes the user's checkout information from the form and sends it to the third party payment authorization service. If the payment is successful the basket is emptied, and user is sent to a receipt page. If not successful, the user is returned to the checkout form.
+        /// </summary>
+        /// <param name="cvm">Checkout View Model with user's checkout info</param>
+        /// <returns>Receipt view or return to Checkout view</returns>
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutViewModel cvm)
         {
