@@ -16,7 +16,6 @@ namespace NurseryApp.Models.Services
         /// <summary>
         /// Constructor method that connects the service to the app's databases through its matching context.
         /// </summary>
-        /// <param name="userManager">UserManager service from Identity Framework</param>
         /// <param name="context">DbContext connection to the NurseryDb</param>
         public CheckoutService(NurseryDbContext context)
         {
