@@ -13,6 +13,10 @@ namespace NurseryApp.Models.Services
     {
         private readonly NurseryDbContext _context;
 
+        /// <summary>
+        /// Constructor method that connects the service to the app's databases through its matching context.
+        /// </summary>
+        /// <param name="context">DbContext connection to the NurseryDb</param>
         public CheckoutProductService(NurseryDbContext context)
         {
             _context = context;

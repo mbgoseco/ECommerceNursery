@@ -14,9 +14,9 @@ namespace NurseryApp.Models.Services
         private readonly NurseryDbContext _context;
 
         /// <summary>
-        /// Constructor
+        /// Constructor method that connects the service to the app's databases through its matching context.
         /// </summary>
-        /// <param name="context">NurseryDbContext</param>
+        /// <param name="context">DbContext connection to the NurseryDb</param>
         public InventoryService(NurseryDbContext context)
         {
             _context = context;
@@ -25,8 +25,8 @@ namespace NurseryApp.Models.Services
         /// <summary>
         /// Create a new product
         /// </summary>
-        /// <param name="product">Product</param>
-        /// <returns>Task</returns>
+        /// <param name="product">Product object to add to table</param>
+        /// <returns>Product added to database</returns>
         public async Task CreateProduct(Product product)
         {
             _context.Products.Add(product);
@@ -36,8 +36,8 @@ namespace NurseryApp.Models.Services
         /// <summary>
         /// Delete a product from the Products table by ID.
         /// </summary>
-        /// <param name="id">int</param>
-        /// <returns>Task</returns>
+        /// <param name="id">Primary Key value</param>
+        /// <returns>Product deleted from database</returns>
         public async Task DeleteProductByID(int id)
         {
             Product product = _context.Products.FirstOrDefault(p => p.ID == id);
@@ -58,8 +58,8 @@ namespace NurseryApp.Models.Services
         /// <summary>
         /// Get a product by ID
         /// </summary>
-        /// <param name="id">int</param>
-        /// <returns>Product</returns>
+        /// <param name="id">Primary Key value</param>
+        /// <returns>Product matching the ID</returns>
         public async Task<Product> GetProductByID(int id)
         {
             Product product = await _context.Products.FirstOrDefaultAsync(p => p.ID == id);
@@ -68,8 +68,8 @@ namespace NurseryApp.Models.Services
         /// <summary>
         /// Update a product after changes have been made.
         /// </summary>
-        /// <param name="product">Product</param>
-        /// <returns>Task</returns>
+        /// <param name="product">Product object with updated data</param>
+        /// <returns>Product in database updated</returns>
         public async Task Update(Product product)
         {
             _context.Products.Update(product);
