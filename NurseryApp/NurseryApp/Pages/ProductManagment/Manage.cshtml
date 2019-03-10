@@ -6,24 +6,40 @@
 }
 
 <h1>Manage</h1>
-<form method="post">
-    <input type="hidden" asp-for="Product.ID" value="@Model.Product.ID"/>
-    <label asp-for="Product.Name">Name</label>
-    <input asp-for="Product.Name" value="@Model.Product.Name" />
-    <label asp-for="Product.Description">Description</label>
-    <input asp-for="Product.Description" value="@Model.Product.Description"/>
-    <label asp-for="Product.Sku">Sku</label>
-    <input asp-for="Product.Sku" value="@Model.Product.Sku"/>
-    <label asp-for="Product.Type">Type</label>
-    <input asp-for="Product.Type" value="@Model.Product.Type"/>
-    <label asp-for="Product.Img">Image</label>
-    <input asp-for="Product.Img" value="@Model.Product.Img"/>
-    <label asp-for="Product.Quantity">Quantity</label>
-    <input asp-for="Product.Quantity" value="@Model.Product.Quantity"/>
-    <label asp-for="Product.Price">Price</label>
-    <input asp-for="Product.Price" value="@Model.Product.Price"/>
-    <label asp-for="Product.Bulk">Bulk</label>
-    <input asp-for="Product.Bulk" value="@Model.Product.Bulk"/>
+<form class="data-form" method="post">
+    <input type="hidden" asp-for="Product.ID" value="@Model.Product.ID" />
+    <p>
+        <label asp-for="Product.Name">Name</label>
+        <input asp-for="Product.Name" value="@Model.Product.Name" />
+    </p>
+    <p>
+        <label asp-for="Product.Description">Description</label>
+        <input asp-for="Product.Description" value="@Model.Product.Description" />
+    </p>
+    <p>
+        <label asp-for="Product.Sku">Sku</label>
+        <input asp-for="Product.Sku" value="@Model.Product.Sku" />
+    </p>
+    <p>
+        <label asp-for="Product.Type">Type</label>
+        <input asp-for="Product.Type" value="@Model.Product.Type" />
+    </p>
+    <p>
+        <label asp-for="Product.Img">Image</label>
+        <input asp-for="Product.Img" value="@Model.Product.Img" />
+    </p>
+    <p>
+        <label asp-for="Product.Quantity">Quantity</label>
+        <input asp-for="Product.Quantity" value="@Model.Product.Quantity" />
+    </p>
+    <p>
+        <label asp-for="Product.Price">Price</label>
+        <input asp-for="Product.Price" value="@Model.Product.Price" />
+    </p>
+    <p>
+        <label asp-for="Product.Bulk">Bulk</label>
+        <input asp-for="Product.Bulk" value="@Model.Product.Bulk" />
+    </p>
     <button type="submit"> Submit!</button>
 </form>
 

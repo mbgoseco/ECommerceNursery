@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace NurseryApp.Models
         //properties
         public int ID { get; set; }
         public string Name { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Please enter positive number.")]
         public int Quantity { get; set; }
         public PlantType Type { get; set; }
         public string Description { get; set; }

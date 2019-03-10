@@ -6,51 +6,42 @@
     Layout = "_Layout";
 }
 
+<div id="intro">
+    <p>Welcome to the Binary Tree Nursery! From lush trees and shrubs, to vibrant and colorful flowers, browse our selection of plants that are sure to add a beautiful feature to your home or garden. </p>
+</div>
 
-@if (signInManager.IsSignedIn(User))
-{
-    <h2>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</h2>
-   
-}
-else
-{
-    <h2> Welcome Home!</h2>
-    <p><a asp-controller="Account" asp-action="Login">Login</a> or
-                <a asp-controller="Account" asp-action="Register">Register!</a>
-    </p>
-}
 <section class="home-img-holder">
     <div class="img1">
         <img class="img1-img" src="~/Assets/cactus.jpg" />
         <div class="img1-div hidden">
-            <a>Products</a>
+            <a asp-action="Shop" asp-controller="Shop">Products</a>
             <p> See our wide variety of products now!</p>
         </div>
     </div>
     <div class="img2">
-        <img class="img2-img" src="~/Assets/girl.jpg" />
+        <img class="img2-img" src="~/Assets/sprout1.jpg" />
         <div class="img2-div hidden">
-            <a> About Us</a>
+            <a asp-action="LandscaperShop" asp-controller="Shop">Landscaper Products</a>
             <p>
-                Test Text
+                If you're a landscaper then register with us to view our discounted selection of bulk items!
             </p>
         </div>
     </div>
     <div class="img3">
-        <img class="img3-img" src="~/Assets/sprout1.jpg" />
+        <img class="img3-img" src="~/Assets/girl.jpg" />
         <div class="img3-div hidden">
-            <a> Extra Page 1</a>
+            <a>About Us</a>
             <p>
-                Test Text
+                Find out more about Binary Tree Nursery.
             </p>
         </div>
     </div>
     <div class="img4">
         <img class="img4-img" src="~/Assets/greenhouse1.jpg" />
         <div class="img4-div hidden">
-            <a> Extra Page 2</a>
+            <a>Contact Us</a>
             <p>
-                Test Text
+                Contact us for any questions regarding our location, business hours, or inventory.
             </p>
         </div>
     </div>
