@@ -19,15 +19,27 @@ namespace NurseryApp.Pages.User.Orders
         private readonly ICheckout _context;
         private readonly ICheckoutProduct _checkoutProduce;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the order Details page
+        /// </summary>
+        /// <param name="userManager">UserManager service from Identity Framework</param>
+        /// <param name="context">Checkout interface</param>
+        /// <param name="checkoutProduct">CheckoutProduct interface</param>
         public DetailsModel(UserManager<ApplicationUser> userManager, ICheckout context, ICheckoutProduct checkoutProduct)
         {
             _userManager = userManager;
             _context = context;
             _checkoutProduce = checkoutProduct;
         }
+
         [FromRoute]
         public int ID { get; set; }
         public List<BasketProductViewModel> Checkout { get; set; }
+
+        /// <summary>
+        /// Provides the Details page with a Checkout object matching the current user and ID from the route
+        /// </summary>
+        /// <returns>Checkout object</returns>
         public async Task OnGet()
         {
             string userEmail = User.Identity.Name;
