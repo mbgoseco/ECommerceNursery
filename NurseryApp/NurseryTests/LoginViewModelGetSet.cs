@@ -6,48 +6,109 @@ using Xunit;
 
 namespace NurseryTests
 {
-    public class LoginViewModelGetSet
+    public class RegisterViewModelGetSet
     {
+        [Fact]
+        public void CanGetFirstName()
+        {
+            RegisterViewModel rvm = new RegisterViewModel
+            {
+                FirstName = "name"
+            };
+            Assert.Equal("name", rvm.FirstName);
+        }
+        [Fact]
+        public void CanGetLastName()
+        {
+            RegisterViewModel rvm = new RegisterViewModel
+            {
+                LastName = "name"
+            };
+            Assert.Equal("name", rvm.LastName);
+        }
+        [Fact]
+        public void CanGetBirthday()
+        {
+            RegisterViewModel rvm = new RegisterViewModel()
+            {
+                Birthday = new DateTime(12 / 12 / 12)
+            };
+            Assert.Equal(new DateTime(12 / 12 / 12), rvm.Birthday);
+        }
+
+
+
+        [Fact]
+        public void CanSetFirstName()
+        {
+            RegisterViewModel rvm = new RegisterViewModel
+            {
+                FirstName = "another name"
+            };
+            rvm.FirstName = "name";
+            Assert.Equal("name", rvm.FirstName);
+        }
+        [Fact]
+        public void CanSetLastName()
+        {
+            RegisterViewModel rvm = new RegisterViewModel
+            {
+                LastName = "another name"
+            };
+            rvm.LastName = "name";
+            Assert.Equal("name", rvm.LastName);
+        }
+        [Fact]
+        public void CanSetBirthday()
+        {
+            RegisterViewModel rvm = new RegisterViewModel()
+            {
+                Birthday = new DateTime(12 / 12 / 12)
+            };
+            rvm.Birthday = new DateTime(11 / 11 / 11);
+            Assert.Equal(new DateTime(11 / 11 / 11), rvm.Birthday);
+        }
+
         [Fact]
         public void CanGetEmail()
         {
-            LoginViewModel lvm = new LoginViewModel()
+            RegisterViewModel rvm = new RegisterViewModel()
             {
                 Email = "test@test.com"
             };
-            Assert.Equal("test@test.com", lvm.Email);
+            Assert.Equal("test@test.com", rvm.Email);
         }
 
         [Fact]
         public void CanSetEmail()
         {
-            LoginViewModel lvm = new LoginViewModel()
+            RegisterViewModel rvm = new RegisterViewModel()
             {
                 Email = "test@test.com"
             };
-            lvm.Email = "new@test.com";
-            Assert.Equal("new@test.com", lvm.Email);
+            rvm.Email = "new@test.com";
+            Assert.Equal("new@test.com", rvm.Email);
         }
 
         [Fact]
         public void CanGetPassword()
         {
-            LoginViewModel lvm = new LoginViewModel()
+            RegisterViewModel rvm = new RegisterViewModel()
             {
                 Password = "Test!123"
             };
-            Assert.Equal("Test!123", lvm.Password);
+            Assert.Equal("Test!123", rvm.Password);
         }
 
         [Fact]
         public void CanSetPassword()
         {
-            LoginViewModel lvm = new LoginViewModel()
+            RegisterViewModel rvm = new RegisterViewModel()
             {
                 Password = "Test!123"
             };
-            lvm.Password = "Test!1234";
-            Assert.Equal("Test!1234", lvm.Password);
+            rvm.Password = "Test!1234";
+            Assert.Equal("Test!1234", rvm.Password);
         }
     }
 }
