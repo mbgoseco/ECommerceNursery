@@ -19,7 +19,12 @@ namespace NurseryApp.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
 
-
+        /// <summary>
+        /// Constructor method that brings in services to be used by the BasketProductController
+        /// </summary>
+        /// <param name="basketProduct">BasketProduct interface</param>
+        /// <param name="basket">Basket interface</param>
+        /// <param name="userManager">UserManager service</param>
         public BasketProductController(IBasketProduct basketProduct, IBasket basket, UserManager<ApplicationUser> userManager)
         {
             _basketProduct = basketProduct;
@@ -58,8 +63,17 @@ namespace NurseryApp.Controllers
             var userRaw = await _userManager.FindByEmailAsync(userEmail);
             string userID = userRaw.Id;
             var basket = await _basket.GetBasketByUserId(userID);
+            var item = await _basketProduct.GetBasketProductByID(basket.ID, id);
+            if (item != null)
+            {
+                item.Quantity++;
+                await _basketProduct.UpdateQuantity(item);
+            }
+            else
+            {
+                await _basketProduct.AddBasketProduct(id, quantity, basket.ID);
 
-            await _basketProduct.AddBasketProduct(id, quantity, basket.ID);
+            }
 
             return RedirectToAction("Index", "BasketProduct");
         }

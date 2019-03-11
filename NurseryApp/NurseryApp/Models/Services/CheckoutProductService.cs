@@ -13,6 +13,10 @@ namespace NurseryApp.Models.Services
     {
         private readonly NurseryDbContext _context;
 
+        /// <summary>
+        /// Constructor method that connects the service to the app's databases through its matching context.
+        /// </summary>
+        /// <param name="context">DbContext connection to the NurseryDb</param>
         public CheckoutProductService(NurseryDbContext context)
         {
             _context = context;
@@ -89,9 +93,9 @@ namespace NurseryApp.Models.Services
         /// <param name="checkoutID">Composite Key value</param>
         /// <param name="productID">Composite Key value</param>
         /// <returns>Matching checkout product</returns>
-        public async Task<BasketProduct> GetCheckoutProductByID(int checkoutID, int productID)
+        public async Task<CheckoutProduct> GetCheckoutProductByID(int checkoutID, int productID)
         {
-            BasketProduct checkoutProduct = await _context.BasketProducts.FirstOrDefaultAsync(bp => bp.BasketID == checkoutID && bp.ProductID == productID);
+            CheckoutProduct checkoutProduct = await _context.CheckoutProducts.FirstOrDefaultAsync(bp => bp.CheckoutID == checkoutID && bp.ProductID == productID);
             return checkoutProduct;
         }
 

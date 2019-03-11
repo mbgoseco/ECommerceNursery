@@ -4,12 +4,12 @@
 {
     <div>
         @item.Name
-        @item.Price
+        • @item.Price
         <form asp-action="Update" asp-controller="BasketProduct" method="POST">
             <div asp-validation-summary="ModelOnly"></div>
             <input type="hidden" asp-for="@item.ProductID" id="id" name="id" value="@item.ProductID" />
-            <label for="quantity"></label>
-            <input type="number" asp-for="@item.Quantity" id="quantity" name="quantity" value="@item.Quantity" />
+            <label for="quantity">Quantity</label>
+            <input type="number" asp-for="@item.Quantity" id="quantity" name="quantity" value="@item.Quantity" min="1"/>
             <span asp-validation-for="@item.Quantity"></span>
             <button type="submit"> Update</button>
         </form>
@@ -17,6 +17,7 @@
             <input type="hidden" asp-for="@item.ProductID" id="id" name="id" value="@item.ProductID" />
             <button type="submit"> Delete</button>
         </form>
-
+        
     </div>
 }
+    <a asp-action="Checkout" asp-controller="Checkout">CHECKOUT</a>

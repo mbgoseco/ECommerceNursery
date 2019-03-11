@@ -2,32 +2,38 @@
 @{
 
     ViewData["Title"] = "ExternalLogin";
+    Layout = "_Layout";
 }
 
-<h2>ExternalLogin</h2>
+<h2>Register with External Login</h2>
 
-<form asp-action="ExternalLoginConfirmation" method="post">
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-
-    <label asp-for="FirstName"></label>
-    <input asp-for="FirstName" />
-    <span asp-validation-for="FirstName"></span>
-
-    <label asp-for="LastName"></label>
-    <input asp-for="LastName" />
-    <span asp-validation-for="LastName"></span>
-
-    <label asp-for="Birthday"></label>
-    <input asp-for="Birthday" />
-    <span asp-validation-for="Birthday"></span>
-
-    <label asp-for="Landscaper"></label>
-    <input type="checkbox" asp-for="Landscaper" />
-
-    // add claims collection
-
-    <button type="submit">Register</button>
+<form class="data-form ext-login" asp-action="ExternalLoginConfirmation" method="post">
+    <p>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" />
+    </p>
+    <p>
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span>
+    </p>
+    <p>
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName"></span>
+    </p>
+    <p>
+        <label asp-for="Birthday"></label>
+        <input asp-for="Birthday" />
+        <span asp-validation-for="Birthday"></span>
+    </p>
+    <p>
+        <label asp-for="Landscaper">
+            Are you employed as a landscaper?
+            <input type="checkbox" asp-for="Landscaper" />
+        </label>
+    </p>
+        <button type="submit">Register</button>
 
 
 </form>

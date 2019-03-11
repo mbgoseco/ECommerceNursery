@@ -1,0 +1,50 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@model NurseryApp.Pages.Admin.DashboardModel
+@inject SignInManager<ApplicationUser> signInManager
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Welcome @User.Claims.First(name => name.Type == "FullName").Value!</</h1>
+<h3><a asp-page="/ProductManagment/Index">Product Management</a></h3>
+<h3>Last 10 Orders</h3>
+<table class="order-table">
+    <thead>
+        <tr>
+            <th>
+                User Name
+            </th>
+            <th>
+                Order Date
+            </th>
+            <th>
+                Total Cost
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>
+                    @order.Name
+                </td>
+                <td>
+                    @order.OrderDate.ToString()
+                </td>
+                <td>
+                    @order.Total
+                </td>
+                <td>
+                    <a asp-page="/Admin/Details" asp-route-ID="@order.ID" asp-route-UserID="@order.UserID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

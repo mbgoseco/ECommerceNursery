@@ -22,6 +22,14 @@ namespace NurseryApp.Controllers
         private IBasket _basket;
         private IEmailSender _emailSender;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the AccountController
+        /// </summary>
+        /// <param name="userManager">UserManager service from Identity Framework</param>
+        /// <param name="signInManager">SignInManager service from Identity Framework</param>
+        /// <param name="context">Configuration strings from user secrets</param>
+        /// <param name="basket">Basket interface</param>
+        /// <param name="emailsender">Emailsender interface</param>
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration context, IBasket basket, IEmailSender emailsender)
         {
             _UserManager = userManager;
@@ -39,7 +47,7 @@ namespace NurseryApp.Controllers
         public IActionResult Register() => View();
 
         /// <summary>
-        /// Take the data from the registration page form, create a new user object, add it to the user DB, and return to the home page.
+        /// Take the data from the registration page form, create a new user object, assign the new user claims and roles, add it to the user DB, and return to the home page.
         /// </summary>
         /// <param name="rvm">Register View Model data from form</param>
         /// <returns>New user object and redirect to home page</returns>
@@ -74,10 +82,23 @@ namespace NurseryApp.Controllers
                     Claim idClaim = new Claim("id", $"{user.Id}");
 
                     List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim, idClaim };
-
+                
                     await _UserManager.AddClaimsAsync(user, claims);
 
+                    if(user.Email.ToUpper() == "95COSTELLO@GMAIL.COM" || user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper() || user.Email.ToUpper() == "AMANDA@CODEFELLOWS.COM")
+                    {
+                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                    }
+
+
+
                     await _SignInManager.SignInAsync(user, isPersistent: false);
+
+                    if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                    {
+                        return RedirectToPage("/Admin/Dashboard");
+                    };
+
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -105,10 +126,16 @@ namespace NurseryApp.Controllers
 
                 if (result.Succeeded)
                 {
+                    var user = await _UserManager.FindByEmailAsync(lvm.Email); 
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("<h1>Welcome to Binary Tree Nursery<h1>");
                     sb.AppendLine("<h2>We're glad you're here<h2>");
                     await _emailSender.SendEmailAsync(lvm.Email, "Thanks for Signing In!", sb.ToString());
+
+                    if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                    {
+                        return RedirectToPage("/Admin/Dashboard");
+                    };
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -167,6 +194,12 @@ namespace NurseryApp.Controllers
                 sb.AppendLine("<h2>We're glad you're here<h2>");
                 string userEmail = info.Principal.FindFirstValue(ClaimTypes.Email);
                 await _emailSender.SendEmailAsync(userEmail, "Thanks for Signing In!", sb.ToString());
+
+                var user = await _UserManager.FindByEmailAsync(userEmail);
+                if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                {
+                    return RedirectToPage("/Admin/Dashboard");
+                };
                 return RedirectToAction("Index", "Home");
             }
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
@@ -213,11 +246,19 @@ namespace NurseryApp.Controllers
                     List<Claim> claims = new List<Claim> { fullNameClaim, emailClaim, birthdayClaim, landscaperClaim, idClaim };
 
                     await _UserManager.AddClaimsAsync(user, claims);
+                    if (user.Email.ToUpper() == "95COSTELLO@GMAIL.COM" || user.Email.ToUpper() == "mbgoseco@gmail.com".ToUpper() || user.Email.ToUpper() == "AMANDA@CODEFELLOWS.COM")
+                    {
+                        await _UserManager.AddToRoleAsync(user, ApplicationRoles.Admin);
+                    }
 
 
                     if (result.Succeeded)
                     {
                         await _SignInManager.SignInAsync(user, isPersistent: false);
+                        if (await _UserManager.IsInRoleAsync(user, ApplicationRoles.Admin))
+                        {
+                            return RedirectToPage("/Admin/Dashboard");
+                        };
                         return RedirectToAction("Index", "Home");
                     }
                 }

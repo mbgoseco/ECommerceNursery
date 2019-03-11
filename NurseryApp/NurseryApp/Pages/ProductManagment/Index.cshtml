@@ -1,0 +1,37 @@
+﻿@page
+@model NurseryApp.Pages.ProductManagment.IndexModel
+
+@{ 
+    ViewData["Title"] = "ProductManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>ProductManagement</h1>
+<table class="order-table">
+    <thead>
+         <tr>
+             <th>Name</th>
+            <th>Description</th>
+             <th>Plant Type</th>
+            <th>Quantity</th>
+            <th></th>
+
+         </tr>   
+    </thead>
+    <tbody>
+        @foreach (var product in @Model.Products)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Type</td>
+                <td>@product.Quantity</td>
+                <td><a asp-page="Manage" asp-route-id="@product.ID">Manage</a></td>
+            </tr>
+        }
+
+
+    </tbody>
+</table>
+    
+
+

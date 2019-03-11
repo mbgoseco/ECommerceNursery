@@ -1,0 +1,161 @@
+﻿@model NurseryApp.Models.ViewModel.CheckoutViewModel
+@using Microsoft.AspNetCore.Identity
+@using NurseryApp.Models
+@using NurseryApp.Models.ViewModel
+@using NurseryApp.Models.Interfaces
+@using System.Security.Claims;
+@inject IBasket basketService
+@inject IBasketProduct basketProductService
+@inject UserManager<ApplicationUser> userManager
+
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "_Layout";
+}
+
+@{
+    ClaimsPrincipal principal = new ClaimsPrincipal(User.Identities);
+    var userID = userManager.GetUserId(principal);
+    Basket basket = await basketService.GetBasketByUserId(userID);
+    List<BasketProductViewModel> products = await basketProductService.GetBasket(basket.ID);
+}
+
+<h3> Checkout </h3>
+<div id="checkout-box">
+    <form class="data-form checkout" asp-for="Checkout" method="post">
+        <p>
+            <section>Credit Card Information</section>
+            <input type="hidden" asp-for="ID" />
+            <input type="hidden" asp-for="Email" />
+        </p>
+        <p>
+            <label asp-for="Name">Credit Card Owner's Name</label>
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </p>
+        <p>
+            <label asp-for="CC">Credit Card Number</label>
+            <select asp-for="CC">
+                <option value="370000000000002">370000000000002</option>
+                <option value="6011000000000012">6011000000000012</option>
+                <option value="3088000000000017">3088000000000017</option>
+                <option value="4007000000027">4007000000027</option>
+                <option value="5424000000000015">5424000000000015</option>
+                <option value="4012888818888">4012888818888</option>
+                <option value="5424000000000015">5424000000000015</option>
+            </select>
+            <span asp-validation-for="CVV"></span>
+        </p>
+        <p>
+            <label asp-for="CVV">CVV Number</label>
+            <input asp-for="CVV" />
+            <span asp-validation-for="CC"></span>
+        </p>
+        <p>
+            <section>Expiration Date</section>
+            <label asp-for="ExpirationDateMonth">Month</label>
+            <select asp-for="ExpirationDateMonth">
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+                <option value="04">04</option>
+                <option value="05">05</option>
+                <option value="06">06</option>
+                <option value="07">07</option>
+                <option value="08">08</option>
+                <option value="09">09</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+        </p>
+        <p>
+            <label asp-for="ExpirationDateYear">Year</label>
+            <select asp-for="ExpirationDateYear">
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+            </select>
+            <span asp-validation-for="ExpirationDateYear"></span>
+        </p>
+        <p>
+            <section>Billing Address</section>
+            <label asp-for="Address"></label>
+            <input asp-for="Address" />
+            <span asp-validation-for="Address"></span>
+        </p>
+        <p>
+            <label asp-for="City"></label>
+            <input asp-for="City" />
+            <span asp-validation-for="City"></span>
+        </p>
+        <p>
+            <label asp-for="State"></label>
+            <input asp-for="State" />
+            <span asp-validation-for="State"></span>
+        </p>
+        <p>
+            <label asp-for="ZipCode"></label>
+            <input asp-for="ZipCode" />
+            <span asp-validation-for="ZipCode"></span>
+        </p>
+        <p>
+            <input type="hidden" asp-for="Total" />
+        </p>
+        <button type="Submit">Place Order</button>
+    </form>
+    <div class="checkout">
+    <table class="order-table">
+        <thead>
+            <tr>
+                <th>
+                    Sku
+                </th>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Product Total
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in products)
+            {
+                <tr>
+                    <td>
+                        @item.Sku
+                    </td>
+                    <th>
+                        @item.Name
+                    </th>
+                    <td>
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @item.Price
+                    </td>
+                    <td> @item.ProductTotal</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+
+                <td>Total</td>
+                <td>@products.First().Total</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>

@@ -11,6 +11,10 @@ namespace NurseryApp.Controllers
     {
         private readonly IInventory _context;
 
+        /// <summary>
+        /// Constructor method that brings in services to be used by the InventoryController
+        /// </summary>
+        /// <param name="context">Inventory interface</param>
         public InventoryController(IInventory context)
         {
             _context = context;

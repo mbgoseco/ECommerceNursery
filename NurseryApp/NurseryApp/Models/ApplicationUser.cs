@@ -12,5 +12,17 @@ namespace NurseryApp.Models
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
         public bool Landscaper { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public int ZipCode { get; set; }
+    }
+
+    /// <summary>
+    /// Contains the different roles that can be assigned to users
+    /// </summary>
+    public class ApplicationRoles
+    {
+        public const string Admin = "Admin";
     }
 }

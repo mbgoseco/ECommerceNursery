@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NurseryApp", "NurseryApp\NurseryApp.csproj", "{1796948E-A0E4-494A-9083-0B26FF8D7125}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NurseryTests", "NurseryTests\NurseryTests.csproj", "{D67EB150-89D1-4357-ACC0-331D54698682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NurseryTests", "NurseryTests\NurseryTests.csproj", "{D67EB150-89D1-4357-ACC0-331D54698682}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
