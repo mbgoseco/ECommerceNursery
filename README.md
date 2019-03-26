@@ -35,7 +35,7 @@ BinaryTree Nursery is a Ecommerce site that sells plants, such as Dwarf Apple Tr
 - Google OAuth
 
 ## Schema
-![Database Schema](/Assets/DataFlow.PNG)
+![Database Schema](https://github.com/mbgoseco/ECommerceNursery/blob/master/Assets/DataFlow.png)
 A Basket has an ID, a UserID, a Total, and many BasketProducts. BasketProducts have a composite key of the BasketID and a Product ID. It has a property of Quantity. BasketProducts are created when a Product is added to a Basket. A Basket is made when a new user registers.  
 A Checkout has an ID, UserID and Total, much like a basket. It includes CheckoutProducts, with a composite key of CheckoutID and a Product ID, and a property of Quantity.
 Products had a Primary Key of ID, and properties of Image, Name, Description, Bulk, Type, and Sku. 
