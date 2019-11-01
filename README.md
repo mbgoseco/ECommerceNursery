@@ -1,5 +1,5 @@
 # BinaryTree Nursery
-BinaryTree Nursery is a Ecommerce site that sells plants, such as Dwarf Apple Trees and Giant Sunflowers. We picked plants because many nurseries do not have good Ecommerce sites, and because we believed a lot of fun styling could be used thanks to how pretty the plants are. View the deployed BinaryTreeNursery [here](https://binarytreenursery.azurewebsites.net/).
+BinaryTree Nursery is a Ecommerce site that sells plants, such as Dwarf Apple Trees and Giant Sunflowers. We picked plants because many nurseries do not have good Ecommerce sites, and because we believed a lot of fun styling could be used thanks to how pretty the plants are.
 
 
 ## Technologies
